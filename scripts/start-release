@@ -1,0 +1,23 @@
+#!/bin/sh
+
+function fail {
+  echo "fail: $1"
+  exit 1
+}
+
+REL_TYPE=${1-patch}
+VER='scripts/version'
+
+cd `git rev-parse --show-toplevel 2>&1` || fail "Not in git repo"
+
+echo "\n=== Starting release `$VER` => `$VER -n $REL_TYPE`"
+git flow release start `$VER -n $REL_TYPE` || fail "couldn't start new release"
+
+echo "\n=== Commiting version bump"
+$VER -b $REL_TYPE || fail "couldn't bump version"
+
+git add version.properties
+git commit -m "Bump version to `$VER`" || fail "couldn't commit version bump"
+
+echo "\n=== Publishing release"
+git flow release publish `$VER` || fail "couldn't publish new release"

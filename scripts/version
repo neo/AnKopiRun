@@ -1,0 +1,56 @@
+#!/bin/sh
+
+. version.properties
+
+function write_version_properties {
+cat >version.properties <<DOC
+VERSION_MAJOR=$VERSION_MAJOR
+VERSION_MINOR=$VERSION_MINOR
+VERSION_PATCH=$VERSION_PATCH
+DOC
+}
+
+NEXT=''
+PERSIST=''
+
+getopts b:n: FLAG
+
+case $FLAG in
+  b)
+    PERSIST='true'
+    NEXT=$OPTARG
+    ;;
+  n)
+    NEXT=$OPTARG
+    ;;
+esac
+
+if [ -n "$NEXT" ]
+then
+  case $NEXT in
+    ma*)
+      VERSION_MAJOR=$((VERSION_MAJOR+1))
+      VERSION_MINOR=0
+      VERSION_PATCH=0
+      ;;
+    mi*)
+      VERSION_MINOR=$((VERSION_MINOR+1))
+      VERSION_PATCH=0
+      ;;
+    pa*)
+      VERSION_PATCH=$((VERSION_PATCH+1))
+      ;;
+    *)
+      echo "Unknown version bump type: $NEXT"
+      echo "Options are major, minor, patch"
+      exit 1
+  esac
+
+  if [ "$PERSIST" == "true" ]
+  then
+    write_version_properties
+  fi
+fi
+
+echo "$VERSION_MAJOR.$VERSION_MINOR.$VERSION_PATCH"
+
