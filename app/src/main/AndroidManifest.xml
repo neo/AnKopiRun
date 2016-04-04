@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".RunnerDetailsActivity">
         </activity>
+        <activity android:name=".RunnerLocationActivity">
+        </activity>
     </application>
 
 </manifest>
