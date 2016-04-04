@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    style="@style/ActivityLinearLayoutStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".RunnerDetailsActivity">
+
+    <ImageView
+        style="@style/LogoStyle"
+        android:src="@drawable/near_empty"/>
+
+    <TextView
+        style="@style/SubtitleStyle"
+        android:text="@string/who_are_you"/>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/name"
+            style="@style/EditTextStyle"
+            android:hint="@string/your_name"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+        android:id="@+id/submit_name_btn"
+        style="@style/ButtonStyle"
+        android:layout_marginTop="48dp"
+        android:text="@android:string/ok"/>
+
+</LinearLayout>

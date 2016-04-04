@@ -3,4 +3,6 @@
     <string name="create">Create</string>
     <string name="join">Join</string>
     <string name="kopi_run">Kopi Run!</string>
+    <string name="who_are_you">Who are you?</string>
+    <string name="your_name">Your Name</string>
 </resources>
