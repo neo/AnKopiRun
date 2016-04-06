@@ -43,6 +43,7 @@ class RunnerLocationActivityTest : RobolectricTest() {
     @Test
     fun clickingOnSubmitLocationButtonCreatesRun() {
         val runRepository = mock(RunRepository::class.java)
+
         activity.runRepository = runRepository
         activity.locationField.setText("The Plain")
 
