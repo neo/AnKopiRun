@@ -7,7 +7,9 @@ machine:
     JAVA_OPTS: "-Xms512m -Xmx1024m"
     GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
 
-
+general:
+    artifacts:
+        - /home/ubuntu/AnKopiRun/app/build/outputs/apk/
 
 dependencies:
   pre:
