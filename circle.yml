@@ -1,4 +1,6 @@
 machine:
+  java:
+    version: oraclejdk8
   environment:
     APP_HOME : /home/ubuntu/AnKopiRun/app
     ADB_INSTALL_TIMEOUT : 20
