@@ -10,8 +10,4 @@ dependencies:
 
 test:
   override:
-    - emulator -avd circleci-android22 -netdelay none -netspeed full -no-audio -no-boot-anim -no-window:
-        background: true
-        parallel: true
-    - circle-android wait-for-boot
-    - ./gradlew test
+    - ./gradlew clean test
