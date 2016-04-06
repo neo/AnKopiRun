@@ -3,7 +3,7 @@
     style="@style/ActivityLinearLayoutStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".RunnerLocationActivity">
+    tools:context=".activities.RunnerLocationActivity">
 
     <ImageView
         style="@style/LogoStyle"
@@ -28,7 +28,7 @@
         android:id="@+id/submit_location_btn"
         style="@style/ButtonStyle"
         android:layout_marginTop="48dp"
-        android:text="@android:string/ok"/>
+        android:text="@string/i_m_done"/>
 
 </LinearLayout>
 
