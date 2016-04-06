@@ -40,19 +40,20 @@ dependencies {
     compile "io.reactivex:rxjava:${rx_version}"
     compile "io.reactivex:rxandroid:${rx_version}"
     compile "io.reactivex:rxkotlin:${rxkotlin_version}"
-    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
 
     compile "com.squareup.retrofit2:retrofit:${retrofit_version}"
     compile "com.squareup.retrofit2:converter-gson:${retrofit_version}"
     compile "com.squareup.retrofit2:adapter-rxjava:${retrofit_version}"
 
-    compile 'com.github.bumptech.glide:glide:3.7.0'
 
     testCompile 'junit:junit:4.12'
     testCompile 'com.natpryce:hamkrest:1.1.0.0'
     testCompile 'org.robolectric:robolectric:3.0'
     testCompile 'com.squareup.okhttp3:mockwebserver:3.0.1'
     testCompile 'org.mockito:mockito-core:2.0.43-beta'
+    compile 'com.jakewharton.rxbinding:rxbinding:0.4.0'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.firebase:firebase-client-android:2.3.1'
 }
 
 buildscript {

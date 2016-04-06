@@ -13,8 +13,7 @@ import org.robolectric.internal.ShadowExtractor
 import org.robolectric.shadows.ShadowActivity
 import pivotal.io.ankopirun.RUNNER_NAME
 import pivotal.io.ankopirun.RobolectricTest
-import pivotal.io.ankopirun.activities.RunnerDetailsActivity
-import pivotal.io.ankopirun.activities.RunnerLocationActivity
+
 
 class RunnerDetailsActivityTest : RobolectricTest() {
     lateinit var activity: RunnerDetailsActivity
