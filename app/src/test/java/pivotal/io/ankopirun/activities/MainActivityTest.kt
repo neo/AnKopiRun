@@ -6,8 +6,9 @@ import org.junit.Test
 import org.robolectric.Robolectric
 import org.robolectric.internal.ShadowExtractor
 import org.robolectric.shadows.ShadowActivity
-import pivotal.io.ankopirun.MainActivity
-import pivotal.io.ankopirun.RunnerDetailsActivity
+import pivotal.io.ankopirun.activities.MainActivity
+import pivotal.io.ankopirun.RobolectricTest
+import pivotal.io.ankopirun.activities.RunnerDetailsActivity
 
 class MainActivityTest : RobolectricTest() {
 

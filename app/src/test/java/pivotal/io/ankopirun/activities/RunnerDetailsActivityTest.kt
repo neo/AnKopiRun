@@ -1,16 +1,20 @@
 package pivotal.io.ankopirun.activities
 
-import android.content.Intent
+import android.content.ComponentName
 import com.natpryce.hamkrest.assertion.assertThat
+import com.natpryce.hamkrest.equalTo
 import com.natpryce.hamkrest.isEmptyString
-import org.junit.Assert.*
+import org.junit.Assert.assertFalse
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import org.robolectric.Robolectric
 import org.robolectric.internal.ShadowExtractor
 import org.robolectric.shadows.ShadowActivity
-import pivotal.io.ankopirun.RunnerDetailsActivity
-import pivotal.io.ankopirun.RunnerLocationActivity
+import pivotal.io.ankopirun.RUNNER_NAME
+import pivotal.io.ankopirun.RobolectricTest
+import pivotal.io.ankopirun.activities.RunnerDetailsActivity
+import pivotal.io.ankopirun.activities.RunnerLocationActivity
 
 class RunnerDetailsActivityTest : RobolectricTest() {
     lateinit var activity: RunnerDetailsActivity
@@ -21,14 +25,16 @@ class RunnerDetailsActivityTest : RobolectricTest() {
     }
 
     @Test
-    fun clickingOnOkButtonStartsRunnerLocationActivity() {
+    fun clickingOnOkButtonStartsRunnerLocationActivityWithName() {
+        activity.nameField.setText("Herp Derp")
+
         activity.submitNameButton.performClick()
 
         val shadowActivity = ShadowExtractor.extract(activity) as ShadowActivity
         val actualIntent = shadowActivity.nextStartedActivity
-        val expectedIntent = Intent(activity, RunnerLocationActivity::class.java)
 
-        assertEquals(expectedIntent, actualIntent)
+        assertThat(actualIntent.component, equalTo(ComponentName(activity, RunnerLocationActivity::class.java)))
+        assertThat(actualIntent.getStringExtra(RUNNER_NAME), equalTo("Herp Derp"))
     }
 
     @Test
@@ -40,7 +46,7 @@ class RunnerDetailsActivityTest : RobolectricTest() {
 
     @Test
     fun submitNameButtonIsEnabledIfNameIsNotEmpty() {
-        activity.nameField.setText("Asd")
+        activity.nameField.setText("Herp derp")
 
         assertTrue(activity.submitNameButton.isEnabled)
     }

@@ -1,4 +1,4 @@
-package pivotal.io.ankopirun
+package pivotal.io.ankopirun.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -7,6 +7,8 @@ import android.widget.EditText
 import com.jakewharton.rxbinding.widget.RxTextView
 import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
+import pivotal.io.ankopirun.R
+import pivotal.io.ankopirun.RUNNER_NAME
 import rx.lang.kotlin.subscribeWith
 
 class RunnerDetailsActivity : AppCompatActivity() {
@@ -22,7 +24,9 @@ class RunnerDetailsActivity : AppCompatActivity() {
 
     private fun initialiseElements() {
         submitNameButton = find<Button>(R.id.submit_name_btn).apply {
-            setOnClickListener { startActivity<RunnerLocationActivity>() }
+            setOnClickListener {
+                startActivity<RunnerLocationActivity>(RUNNER_NAME to nameField.text.toString())
+            }
             isEnabled = false
         }
 

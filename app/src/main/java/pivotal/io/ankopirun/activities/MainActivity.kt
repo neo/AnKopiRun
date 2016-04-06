@@ -1,11 +1,11 @@
-package pivotal.io.ankopirun
+package pivotal.io.ankopirun.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
-
+import pivotal.io.ankopirun.R
 
 class MainActivity : AppCompatActivity() {
     lateinit var createButton: Button

@@ -1,11 +1,10 @@
-package pivotal.io.ankopirun.activities
+package pivotal.io.ankopirun
 
 import android.os.Build
 import org.junit.Ignore
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricGradleTestRunner
 import org.robolectric.annotation.Config
-import pivotal.io.ankopirun.BuildConfig
 
 @RunWith(RobolectricGradleTestRunner::class)
 @Config(constants = BuildConfig::class,
