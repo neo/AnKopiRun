@@ -19,18 +19,18 @@ class RunnerLocationActivity : AppCompatActivity() {
     lateinit var locationField: EditText
     lateinit var runnerName : String
 
-//    var runRepository: RunRepository
+    lateinit var runRepository: RunRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_runner_location)
 
-        retrieveName(savedInstanceState)
+        retrieveName()
         initialiseElements()
     }
 
-    private fun retrieveName(savedInstanceState: Bundle?) {
-        runnerName = savedInstanceState!!.getString(RUNNER_NAME, "")
+    private fun retrieveName() {
+        runnerName = intent.extras.getString(RUNNER_NAME, "")
     }
 
     private fun initialiseElements() {
@@ -47,9 +47,7 @@ class RunnerLocationActivity : AppCompatActivity() {
     }
 
     private fun createRun() {
-        var run = Run(runnerName, locationField.text.toString())
+        val run = Run(runnerName, locationField.text.toString())
+        runRepository.create(run)
     }
-
-
-
 }
