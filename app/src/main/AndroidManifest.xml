@@ -22,6 +22,8 @@
         </activity>
         <activity android:name=".activities.RunnerLocationActivity">
         </activity>
+        <activity android:name=".activities.OrderDetailsActivity">
+        </activity>
     </application>
 
 </manifest>

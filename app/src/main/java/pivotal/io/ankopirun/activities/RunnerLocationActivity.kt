@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import com.jakewharton.rxbinding.widget.RxTextView
 import org.jetbrains.anko.find
+import org.jetbrains.anko.startActivity
 import pivotal.io.ankopirun.App
 import pivotal.io.ankopirun.R
 import pivotal.io.ankopirun.RUNNER_NAME
@@ -38,7 +39,10 @@ class RunnerLocationActivity : AppCompatActivity() {
 
     private fun initialiseElements() {
         submitLocationButton = find<Button>(R.id.submit_location_btn).apply {
-            setOnClickListener { createRun() }
+            setOnClickListener {
+                createRun()
+                startActivity<OrderDetailsActivity>()
+            }
         }
 
         locationField = find<EditText>(R.id.location)
