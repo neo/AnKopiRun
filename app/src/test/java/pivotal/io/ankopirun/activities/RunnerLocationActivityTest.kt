@@ -49,6 +49,6 @@ class RunnerLocationActivityTest : RobolectricTest() {
 
         activity.submitLocationButton.performClick()
 
-        verify(runRepository).create(Run("Herp derp", "The Plain"))
+        verify(runRepository).create(Run("Herp derp", "The Plain", 0L))
     }
 }
