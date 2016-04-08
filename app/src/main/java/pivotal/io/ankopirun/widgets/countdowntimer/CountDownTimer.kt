@@ -1,4 +1,4 @@
-package pivotal.io.ankopirun.widgets
+package pivotal.io.ankopirun.widgets.countdowntimer
 
 interface CountDownTimer {
     fun setOnFinishHandler(handler: () -> Unit)
