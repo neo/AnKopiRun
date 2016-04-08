@@ -5,4 +5,6 @@ import pivotal.io.ankopirun.views.activities.RunnerLocationActivity
 
 interface BaseComponent {
     fun inject(activity: RunnerLocationActivity)
+
+    fun inject(activity: OrderDetailsActivity)
 }

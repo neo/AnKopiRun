@@ -10,7 +10,8 @@ import pivotal.io.ankopirun.R
 import pivotal.io.ankopirun.presenters.OrderDetailsPresenter
 import pivotal.io.ankopirun.repositories.RunRepository
 import pivotal.io.ankopirun.views.TimerView
-import pivotal.io.ankopirun.widgets.CountDownTimer
+import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
+import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
 import javax.inject.Inject
 
 class OrderDetailsActivity : AppCompatActivity(), TimerView {
@@ -31,7 +32,8 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
 
         timerText = find(R.id.countdown_timer)
 
-        val presenter = OrderDetailsPresenter(this, countDownTimer, runRepository)
+        val calculator = CountDownCalculator(runRepository.lastRun(), System.currentTimeMillis())
+        OrderDetailsPresenter(this, countDownTimer, calculator)
     }
 
     override fun setTimerText(tick: Long) {

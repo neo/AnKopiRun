@@ -6,5 +6,6 @@ interface RunRepository {
 
     fun create(run: Run)
 
+    fun lastRun() :Run
 }
 
