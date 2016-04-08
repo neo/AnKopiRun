@@ -1,4 +1,4 @@
-package pivotal.io.ankopirun.activities
+package pivotal.io.ankopirun.views.activities
 
 import android.content.Intent
 import org.junit.Assert.assertEquals
@@ -6,9 +6,9 @@ import org.junit.Test
 import org.robolectric.Robolectric
 import org.robolectric.internal.ShadowExtractor
 import org.robolectric.shadows.ShadowActivity
-import pivotal.io.ankopirun.activities.MainActivity
+import pivotal.io.ankopirun.views.activities.MainActivity
 import pivotal.io.ankopirun.RobolectricTest
-import pivotal.io.ankopirun.activities.RunnerDetailsActivity
+import pivotal.io.ankopirun.views.activities.RunnerDetailsActivity
 
 class MainActivityTest : RobolectricTest() {
 

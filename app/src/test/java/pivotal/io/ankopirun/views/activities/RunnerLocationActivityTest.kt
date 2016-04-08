@@ -1,4 +1,4 @@
-package pivotal.io.ankopirun.activities
+package pivotal.io.ankopirun.views.activities
 
 import android.content.Intent
 import com.natpryce.hamkrest.assertion.assertThat
