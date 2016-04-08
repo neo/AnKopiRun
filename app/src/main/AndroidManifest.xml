@@ -11,16 +11,18 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".views.activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".activities.RunnerDetailsActivity">
+        <activity android:name=".views.activities.RunnerDetailsActivity">
         </activity>
-        <activity android:name=".activities.RunnerLocationActivity">
+        <activity android:name=".views.activities.RunnerLocationActivity">
+        </activity>
+        <activity android:name=".views.activities.OrderDetailsActivity">
         </activity>
     </application>
 

@@ -3,7 +3,7 @@
     style="@style/ActivityLinearLayoutStyle"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".RunnerDetailsActivity">
+    tools:context=".views.activities.RunnerDetailsActivity">
 
     <ImageView
         style="@style/LogoStyle"

@@ -4,6 +4,8 @@ import dagger.Module
 import dagger.Provides
 import pivotal.io.ankopirun.repositories.FirebaseRunRepository
 import pivotal.io.ankopirun.repositories.RunRepository
+import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
+import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimerImpl
 import javax.inject.Singleton
 
 @Module
@@ -14,5 +16,11 @@ class RunModule {
     @Provides
     fun runRepository() : RunRepository {
         return FirebaseRunRepository(baseUrl)
+    }
+
+    @Singleton
+    @Provides
+    fun countDownTimer() : CountDownTimer {
+        return CountDownTimerImpl()
     }
 }

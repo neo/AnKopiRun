@@ -1,4 +1,4 @@
-package pivotal.io.ankopirun.activities
+package pivotal.io.ankopirun.views.activities
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
