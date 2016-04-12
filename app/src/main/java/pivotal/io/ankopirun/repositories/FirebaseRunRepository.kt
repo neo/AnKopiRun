@@ -3,6 +3,7 @@ package pivotal.io.ankopirun.repositories
 import com.firebase.client.Firebase
 import com.firebase.client.ServerValue
 import com.soikonomakis.rxfirebase.RxFirebase
+import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.models.Run
 import rx.Observable
 
@@ -31,5 +32,9 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
         return RxFirebase.getInstance()
                 .observeValueEvent(ref)
                 .map { it.getValue(Long::class.java) }
+    }
+
+    override fun getOrders(): Observable<List<Order>> {
+        throw UnsupportedOperationException()
     }
 }

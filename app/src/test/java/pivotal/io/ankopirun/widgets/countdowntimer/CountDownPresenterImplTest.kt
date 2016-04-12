@@ -1,4 +1,4 @@
-package pivotal.io.ankopirun.presenters
+package pivotal.io.ankopirun.widgets.countdowntimer
 
 import org.junit.Test
 import org.mockito.Mockito.mock
@@ -6,9 +6,10 @@ import org.mockito.Mockito.verify
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.views.TimerView
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
+import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenterImpl
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
 
-class OrderDetailsPresenterTest {
+class CountDownPresenterImplTest {
 
     @Test
     fun startsTimerWithDurationAndUpdatesTimerDisplayWhenCountdownStarts() {
@@ -16,7 +17,7 @@ class OrderDetailsPresenterTest {
         val mockView = mock(TimerView::class.java)
         val run = Run("Herp derp", "The Plain", duration = 4000, startTime = 1459999675460)
         val calculator = CountDownCalculator(run, 1459999678460)
-        var presenter = OrderDetailsPresenter(countDownTimer).apply {
+        var presenter = CountDownPresenterImpl(countDownTimer).apply {
             view = mockView
         }
 

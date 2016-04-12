@@ -4,6 +4,7 @@ import org.junit.Test
 import org.mockito.Mockito.*
 import org.robolectric.Robolectric
 import pivotal.io.ankopirun.RobolectricTest
+import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.RunRepository
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenter
@@ -16,7 +17,7 @@ class OrderDetailsActivityTest : RobolectricTest() {
     fun resumingActivityStartsCountDownTimer() {
         val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java)
         val activity = activityController.create().get().apply {
-            presenter = mock(CountDownPresenter::class.java)
+            countDownPresenter = mock(CountDownPresenter::class.java)
             runRepository = mock(RunRepository::class.java).apply {
                 `when`(lastRun()).thenReturn(Observable.just(Run()))
                 `when`(clockSkew()).thenReturn(Observable.just(1))
@@ -25,21 +26,41 @@ class OrderDetailsActivityTest : RobolectricTest() {
             io = Schedulers.immediate()
         }
 
-        verifyZeroInteractions(activity.presenter)
+        verifyZeroInteractions(activity.countDownPresenter)
         activityController.resume()
 
-        verify(activity.presenter).startCountDown(anyLong())
+        verify(activity.countDownPresenter).startCountDown(anyLong())
     }
 
     @Test
     fun pausingActivityStopsCountDownTimer() {
         val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java)
         val activity = activityController.create().get().apply {
-            presenter = mock(CountDownPresenter::class.java)
+            countDownPresenter = mock(CountDownPresenter::class.java)
         }
 
         activityController.pause()
 
-        verify(activity.presenter).stopCountDown()
+        verify(activity.countDownPresenter).stopCountDown()
+    }
+
+    @Test
+    fun resumingActivityStartsGetsOrders() {
+        val listOfOrders = listOf(Order(), Order(), Order())
+        val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java)
+        val activity = activityController.create().get().apply {
+            countDownPresenter = mock(CountDownPresenter::class.java)
+            runRepository = mock(RunRepository::class.java).apply {
+                `when`(lastRun()).thenReturn(Observable.just(Run()))
+                `when`(clockSkew()).thenReturn(Observable.just(1))
+                `when`(getOrders()).thenReturn(Observable.just(listOfOrders))
+            }
+            mainThread = Schedulers.immediate()
+            io = Schedulers.immediate()
+        }
+
+        activityController.resume()
+
+        verify(activity.runRepository).getOrders()
     }
 }

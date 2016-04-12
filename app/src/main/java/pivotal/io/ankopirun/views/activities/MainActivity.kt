@@ -9,6 +9,7 @@ import pivotal.io.ankopirun.R
 
 class MainActivity : AppCompatActivity() {
     lateinit var createButton: Button
+    lateinit var joinButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,10 @@ class MainActivity : AppCompatActivity() {
     private fun initialiseElements() {
         createButton = find<Button>(R.id.create_btn).apply {
             setOnClickListener { startActivity<RunnerDetailsActivity>() }
+        }
+
+        joinButton = find<Button>(R.id.join_btn).apply {
+            setOnClickListener { startActivity<OrderDetailsActivity>() }
         }
     }
 }
