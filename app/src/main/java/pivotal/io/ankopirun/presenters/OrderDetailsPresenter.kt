@@ -2,16 +2,25 @@ package pivotal.io.ankopirun.presenters
 
 import pivotal.io.ankopirun.views.TimerView
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
+import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenter
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
 
-class OrderDetailsPresenter(val view: TimerView,
-                            val countDownTimer: CountDownTimer,
-                            val countDownCalculator: CountDownCalculator) {
+class OrderDetailsPresenter(val countDownTimer: CountDownTimer) : CountDownPresenter {
 
-    fun startCountdown() {
+    var view: TimerView? = null
+
+    override fun startCountDown(durationInMilliseconds: Long) {
         countDownTimer.apply {
-            setOnTickHandler { tick -> view.setTimerText(tick) }
-            start(countDownCalculator.durationInMilliseconds())
-        }
+            setOnTickHandler {
+                tick -> view?.setTimerText(tick)
+            }
+        }.start(durationInMilliseconds)
+        view?.setTimerText(durationInMilliseconds)
     }
+
+    override fun stopCountDown() {
+        countDownTimer.cancel()
+    }
+
 }
+

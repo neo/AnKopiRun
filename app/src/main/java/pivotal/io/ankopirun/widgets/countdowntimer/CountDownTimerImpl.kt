@@ -1,6 +1,6 @@
 package pivotal.io.ankopirun.widgets.countdowntimer
 
-class CountDownTimerImpl(val tick: Long = 5 * 60 * 1000) : CountDownTimer {
+class CountDownTimerImpl(val tick: Long = 100) : CountDownTimer {
 
     private var onFinishHandler: (() -> Unit) = {}
     private var onTickHandler: ((t: Long) -> Unit) = { t -> Unit }
