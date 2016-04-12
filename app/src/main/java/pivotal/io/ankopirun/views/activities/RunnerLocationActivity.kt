@@ -41,6 +41,7 @@ class RunnerLocationActivity : AppCompatActivity() {
         submitLocationButton = find<Button>(R.id.submit_location_btn).apply {
             setOnClickListener {
                 createRun()
+                // TODO: Add verification before starting activity
                 startActivity<OrderDetailsActivity>()
             }
         }
