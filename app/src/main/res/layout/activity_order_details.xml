@@ -1,17 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    style="@style/ActivityLinearLayoutStyle"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".views.activities.OrderDetailsActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-    <ImageView
-        style="@style/LogoStyle"
-        android:src="@drawable/near_full"/>
+    <LinearLayout
+        style="@style/ActivityLinearLayoutStyle"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".views.activities.OrderDetailsActivity">
+
+        <ImageView
+            style="@style/LogoStyle"
+            android:src="@drawable/near_full"/>
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/countdown_timer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        style="@style/TimerStyle"
+        android:text="@string/start_time"/>
 
-</LinearLayout>
+</RelativeLayout>
+

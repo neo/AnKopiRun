@@ -9,16 +9,21 @@ import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
 
 class OrderDetailsPresenterTest {
+
     @Test
-    fun startsTimerWithDuration() {
+    fun startsTimerWithDurationAndUpdatesTimerDisplayWhenCountdownStarts() {
         val countDownTimer = mock(CountDownTimer::class.java)
-        val view = mock(TimerView::class.java)
+        val mockView = mock(TimerView::class.java)
         val run = Run("Herp derp", "The Plain", duration = 4000, startTime = 1459999675460)
         val calculator = CountDownCalculator(run, 1459999678460)
-        var presenter = OrderDetailsPresenter(view, countDownTimer, calculator)
+        var presenter = OrderDetailsPresenter(countDownTimer).apply {
+            view = mockView
+        }
 
-        presenter.startCountdown()
+        presenter.startCountDown(calculator.durationInMilliseconds())
 
-        verify(countDownTimer).start(run.duration * 1000 - 3000)
+        val durationInMilliseconds = run.duration * 1000 - 3000
+        verify(countDownTimer).start(durationInMilliseconds)
+        verify(mockView).setTimerText(durationInMilliseconds)
     }
 }

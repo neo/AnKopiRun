@@ -2,7 +2,11 @@ package pivotal.io.ankopirun.widgets.countdowntimer
 
 import java.util.concurrent.TimeUnit
 
-class CountDownPresenter() {
+interface CountDownPresenter {
+
+    fun startCountDown(durationInMilliseconds: Long)
+
+    fun stopCountDown()
 
     fun format(milliseconds: Long): String {
         return String.format("%d:%02d",
