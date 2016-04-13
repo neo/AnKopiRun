@@ -14,15 +14,16 @@ class OrderListPresenterImplTest {
     fun populatesOrderListWithOrders() {
         val mockView = mock(OrderListView::class.java)
         val listOfOrders = listOf(Order(), Order(), Order())
+        val runUuid = "runUuid"
         val mockRepo = mock(OrderRepository::class.java).apply {
-            `when`(getOrders()).thenReturn(Observable.just(listOfOrders))
+            `when`(getOrders(runUuid)).thenReturn(Observable.just(listOfOrders))
         }
         val scheduler = Schedulers.immediate()
         val presenter = OrderListPresenterImpl(mockRepo, scheduler, scheduler).apply {
             view = mockView
         }
 
-        presenter.populateOrderList()
+        presenter.populateOrderList(runUuid)
 
         verify(mockView, times(3)).addOrder(Order())
     }

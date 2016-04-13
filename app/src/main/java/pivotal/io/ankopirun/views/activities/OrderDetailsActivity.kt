@@ -4,22 +4,18 @@ package pivotal.io.ankopirun.views.activities
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.Log
-import android.widget.Adapter
 import android.widget.TextView
 import org.jetbrains.anko.find
 import pivotal.io.ankopirun.App
 import pivotal.io.ankopirun.R
-import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.repositories.OrderRepository
-import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenterImpl
 import pivotal.io.ankopirun.repositories.RunRepository
 import pivotal.io.ankopirun.views.OrderListRecyclerView
-import pivotal.io.ankopirun.views.OrderListView
 import pivotal.io.ankopirun.views.TimerView
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenter
+import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenterImpl
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
 import pivotal.io.ankopirun.widgets.orderlist.OrderListAdapter
 import pivotal.io.ankopirun.widgets.orderlist.OrderListPresenter
@@ -91,14 +87,13 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
                                 System.currentTimeMillis(),
                                 clockSkew)
                         countDownPresenter.startCountDown(calculator.durationInMilliseconds())
+                        orderListPresenter.populateOrderList(run.id)
                     }
 
                     onError {
                         Log.d(TAG.value, it.message)
                     }
                 }
-
-        orderListPresenter.populateOrderList()
     }
 
     override fun onPause() {

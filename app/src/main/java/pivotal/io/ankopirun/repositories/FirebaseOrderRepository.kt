@@ -7,15 +7,14 @@ import rx.Observable
 
 class FirebaseOrderRepository(val baseUrl: String) : OrderRepository {
 
-    // TODO: need to filter by the run id
-    override fun getOrders(): Observable<List<Order>> {
-        // val ref = Firebase("$baseUrl/orders")
-        // TODO: CHANGE THIS BACK!!!!!
-        val ref = Firebase("https://kopi-run.firebaseio.com/orders")
+    override fun getOrders(runUuid: String): Observable<List<Order>> {
+        val ref = Firebase("$baseUrl/orders")
+        val query = ref.orderByChild("runUuid").equalTo(runUuid)
 
         return RxFirebase.getInstance()
-                .observeValueEvent(ref)
+                .observeValueEvent(query)
                 .map { it.children.map { it.getValue(Order::class.java) } }
     }
+
 }
 

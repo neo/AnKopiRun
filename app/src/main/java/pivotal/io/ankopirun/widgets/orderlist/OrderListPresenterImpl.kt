@@ -10,8 +10,8 @@ class OrderListPresenterImpl(val orderRepository: OrderRepository,
                              val mainThreadScheduler: Scheduler) : OrderListPresenter {
     var view: OrderListView? = null
 
-    override fun populateOrderList() {
-        orderRepository.getOrders()
+    override fun populateOrderList(runUuid: String) {
+        orderRepository.getOrders(runUuid)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainThreadScheduler)
                 .subscribeWith {
