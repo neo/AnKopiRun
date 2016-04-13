@@ -5,6 +5,7 @@ import com.firebase.client.Firebase
 import pivotal.io.ankopirun.di.components.AppComponent
 import pivotal.io.ankopirun.di.components.DaggerAppComponent
 import pivotal.io.ankopirun.di.modules.AndroidModule
+import pivotal.io.ankopirun.di.modules.OrderModule
 import pivotal.io.ankopirun.di.modules.RunModule
 
 class App : Application() {
@@ -17,6 +18,7 @@ class App : Application() {
                 .builder()
                 .androidModule(AndroidModule(this))
                 .runModule(RunModule())
+                .orderModule(OrderModule())
                 .build()
 
         setUpFirebase()
