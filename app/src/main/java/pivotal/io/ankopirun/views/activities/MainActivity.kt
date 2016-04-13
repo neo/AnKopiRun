@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         joinButton = find<Button>(R.id.join_btn).apply {
-            setOnClickListener { startActivity<OrderDetailsActivity>() }
+            setOnClickListener { startActivity<CreateOrderActivity>() }
         }
     }
 }

@@ -14,7 +14,6 @@ class CountDownTimerImpl(val tick: Long = 100) : CountDownTimer {
         onTickHandler = handler
     }
 
-
     override fun cancel() {
         timer?.cancel()
     }

@@ -24,4 +24,17 @@ class MainActivityTest : RobolectricTest() {
 
         assertEquals(expectedIntent, actualIntent)
     }
+
+    @Test
+    fun clickingOnJoinButtonStartsCreateOrderActivity() {
+        val activity = Robolectric.setupActivity(MainActivity::class.java)
+
+        activity.joinButton.performClick()
+
+        val shadowActivity = ShadowExtractor.extract(activity) as ShadowActivity
+        val actualIntent = shadowActivity.nextStartedActivity
+        val expectedIntent = Intent(activity, CreateOrderActivity::class.java)
+
+        assertEquals(expectedIntent, actualIntent)
+    }
 }

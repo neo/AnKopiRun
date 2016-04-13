@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ActivityLinearLayoutStyle"
-    tools:context=".MainActivity">
+    tools:context=".views.activities.MainActivity">
 
     <ImageView
         style="@style/LogoStyle"

@@ -16,5 +16,11 @@ class FirebaseOrderRepository(val baseUrl: String) : OrderRepository {
                 .map { it.children.map { it.getValue(Order::class.java) } }
     }
 
+    override fun createOrder(order: Order) {
+        val ref = Firebase("$baseUrl/orders")
+        val orderRef = ref.push()
+        orderRef.setValue(order)
+    }
+
 }
 
