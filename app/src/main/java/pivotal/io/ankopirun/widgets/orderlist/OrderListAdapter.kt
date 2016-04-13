@@ -14,29 +14,26 @@ import pivotal.io.ankopirun.models.Order
 
 class OrderListAdapter : RecyclerView.Adapter<OrderListAdapter.ViewHolder>() {
 
-    private val mDataset: List<Order> = listOf(
-            Order("kopi o gao gao gao", "AS", "11"),
-            Order("milo dinosaur gao gao", "BT", "5"),
-            Order("milo gozilla gaiju", "BA", "5"),
-            Order("long black", "NT", "3"),
-            Order("cappucino", "AY", "4"),
-            Order("lattee", "RR", "6"))
+    private var mDataset = mutableListOf<Order>()
 
     override fun getItemCount(): Int {
         return mDataset.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val order = mDataset.get(position)
         holder.apply {
             nameTextView.apply {
-                setText(mDataset.get(position).requesterName)
-                setBackgroundColor(ContextCompat.getColor(context, ORDER_LIST_COLORS.get(position % ORDER_LIST_COLORS.size)))
+                val name = order.requesterName
+                text = name.substring(0, Math.min(2, name.length)).padEnd(1, '☕')
+                setBackgroundColor(ContextCompat.getColor(context,
+                        ORDER_LIST_COLORS.get(position % ORDER_LIST_COLORS.size)))
             }
             itemTextView.apply {
-                setText(mDataset.get(position).description)
+                text = order.description
             }
             quantityTextView.apply {
-                setText("x ${mDataset.get(position).runUuid}") // <-- TODO: CHANGE THIS ZOMG
+                text = ""
             }
         }
     }
@@ -57,5 +54,9 @@ class OrderListAdapter : RecyclerView.Adapter<OrderListAdapter.ViewHolder>() {
             itemTextView = v.find(R.id.item)
             quantityTextView = v.find(R.id.quantity)
         }
+    }
+
+    fun add(order: Order) {
+        mDataset.add(order)
     }
 }

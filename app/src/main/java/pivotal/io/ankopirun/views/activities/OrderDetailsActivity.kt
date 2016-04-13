@@ -15,6 +15,7 @@ import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.repositories.OrderRepository
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenterImpl
 import pivotal.io.ankopirun.repositories.RunRepository
+import pivotal.io.ankopirun.views.OrderListRecyclerView
 import pivotal.io.ankopirun.views.OrderListView
 import pivotal.io.ankopirun.views.TimerView
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
@@ -28,11 +29,11 @@ import rx.lang.kotlin.subscribeWith
 import javax.inject.Inject
 import javax.inject.Named
 
-class OrderDetailsActivity : AppCompatActivity(), TimerView, OrderListView {
+class OrderDetailsActivity : AppCompatActivity(), TimerView {
     val TAG = lazy { this.localClassName }
 
     lateinit var timerText: TextView
-    lateinit var orderList: RecyclerView
+    lateinit var orderList: OrderListRecyclerView
 
     lateinit var countDownPresenter: CountDownPresenter
     lateinit var orderListPresenter: OrderListPresenter
@@ -59,7 +60,7 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView, OrderListView {
         (application as App).component.inject(this)
 
         timerText = find(R.id.countdown_timer)
-        orderList = find<RecyclerView>(R.id.order_list).apply {
+        orderList = find<OrderListRecyclerView>(R.id.order_list).apply {
             layoutManager = LinearLayoutManager(this@OrderDetailsActivity)
             setHasFixedSize(true)
             adapter = OrderListAdapter()
@@ -72,7 +73,7 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView, OrderListView {
 
         // TODO: Dagger this.
         orderListPresenter = OrderListPresenterImpl(orderRepository, io, mainThread).apply {
-            view = this@OrderDetailsActivity
+            view = orderList
         }
     }
 
@@ -109,9 +110,4 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView, OrderListView {
         // TODO: Don't allow negative value for timer
         timerText.text = countDownPresenter.format(tick)
     }
-
-    override fun addOrder(order: Order) {
-        Log.d("OHAI", order.toString())
-    }
-
 }

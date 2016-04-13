@@ -46,7 +46,7 @@ class OrderDetailsActivityTest : RobolectricTest() {
     }
 
     @Test
-    fun resumingActivityStartsGetsOrders() {
+    fun resumingActivityPopulatesOrderList() {
         val listOfOrders = listOf(Order(), Order(), Order())
         val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java)
         val activity = activityController.create().get().apply {
