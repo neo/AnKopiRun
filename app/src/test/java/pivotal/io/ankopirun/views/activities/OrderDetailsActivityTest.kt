@@ -52,7 +52,7 @@ class OrderDetailsActivityTest : RobolectricTest() {
         val activity = activityController.create().get().apply {
             countDownPresenter = mock(CountDownPresenter::class.java)
             runRepository = mock(RunRepository::class.java).apply {
-                `when`(lastRun()).thenReturn(Observable.just(Run()))
+                `when`(lastRun()).thenReturn(Observable.just(Run(id = "id")))
                 `when`(clockSkew()).thenReturn(Observable.just(1))
                 `when`(getOrders()).thenReturn(Observable.just(listOfOrders))
             }
@@ -63,6 +63,6 @@ class OrderDetailsActivityTest : RobolectricTest() {
 
         activityController.resume()
 
-        verify(activity.orderListPresenter).populateOrderList()
+        verify(activity.orderListPresenter).populateOrderList("id")
     }
 }
