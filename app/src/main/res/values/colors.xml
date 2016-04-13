@@ -6,4 +6,12 @@
     <color name="colorAccentDisable">#9C4B33</color>
     <color name="colorAccentDark">#DC512A</color>
     <color name="colorOffWhite">#FAFAFA</color>
+
+    <!-- Order list view colors -->
+    <color name="colorMoxie1">#CCEAEE</color>
+    <color name="colorMoxie2">#98D4DC</color>
+    <color name="colorMoxie3">#733E4E</color>
+    <color name="colorMoxie4">#F5859D</color>
+    <color name="colorMoxie5">#FAC2CE</color>
+
 </resources>

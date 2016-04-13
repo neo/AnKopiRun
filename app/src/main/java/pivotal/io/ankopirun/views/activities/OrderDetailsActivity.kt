@@ -3,7 +3,10 @@ package pivotal.io.ankopirun.views.activities
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
+import android.widget.Adapter
 import android.widget.TextView
 import org.jetbrains.anko.find
 import pivotal.io.ankopirun.App
@@ -17,6 +20,7 @@ import pivotal.io.ankopirun.views.TimerView
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenter
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
+import pivotal.io.ankopirun.widgets.orderlist.OrderListAdapter
 import pivotal.io.ankopirun.widgets.orderlist.OrderListPresenter
 import pivotal.io.ankopirun.widgets.orderlist.OrderListPresenterImpl
 import rx.Scheduler
@@ -28,6 +32,10 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView, OrderListView {
     val TAG = lazy { this.localClassName }
 
     lateinit var timerText: TextView
+    lateinit var orderList: RecyclerView
+
+    lateinit var countDownPresenter: CountDownPresenter
+    lateinit var orderListPresenter: OrderListPresenter
 
     @Inject
     lateinit var countDownTimer: CountDownTimer
@@ -41,9 +49,6 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView, OrderListView {
     @field:[Inject Named("mainThread")]
     lateinit var mainThread: Scheduler
 
-    lateinit var countDownPresenter: CountDownPresenter
-    lateinit var orderListPresenter: OrderListPresenter
-
     @Inject
     lateinit var orderRepository: OrderRepository
 
@@ -54,6 +59,11 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView, OrderListView {
         (application as App).component.inject(this)
 
         timerText = find(R.id.countdown_timer)
+        orderList = find<RecyclerView>(R.id.order_list).apply {
+            layoutManager = LinearLayoutManager(this@OrderDetailsActivity)
+            setHasFixedSize(true)
+            adapter = OrderListAdapter()
+        }
 
         // TODO: Dagger this.
         countDownPresenter = CountDownPresenterImpl(countDownTimer).apply {
