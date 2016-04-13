@@ -8,6 +8,7 @@ import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.RunRepository
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenter
+import pivotal.io.ankopirun.widgets.orderlist.OrderListPresenter
 import rx.Observable
 import rx.schedulers.Schedulers
 
@@ -55,12 +56,13 @@ class OrderDetailsActivityTest : RobolectricTest() {
                 `when`(clockSkew()).thenReturn(Observable.just(1))
                 `when`(getOrders()).thenReturn(Observable.just(listOfOrders))
             }
+            orderListPresenter = mock(OrderListPresenter::class.java)
             mainThread = Schedulers.immediate()
             io = Schedulers.immediate()
         }
 
         activityController.resume()
 
-        verify(activity.runRepository).getOrders()
+        verify(activity.orderListPresenter).populateOrderList()
     }
 }
