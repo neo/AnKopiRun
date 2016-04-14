@@ -12,8 +12,8 @@ import org.mockito.Mockito.verify
 import org.robolectric.Robolectric
 import org.robolectric.internal.ShadowExtractor
 import org.robolectric.shadows.ShadowActivity
+import pivotal.io.ankopirun.RUN
 import pivotal.io.ankopirun.RUNNER_NAME
-import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.RobolectricTest
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.RunRepository
@@ -31,9 +31,11 @@ class RunnerLocationActivityTest : RobolectricTest() {
                 .create()
                 .get()
 
+        val run = Run("Herp derp", "The Plain")
+
         mockRunRepository = mock(RunRepository::class.java).apply {
-            Mockito.`when`(createRun(Run("Herp derp", "The Plain")))
-                    .thenReturn(Observable.just(Run(id = "RUN_UUID")))
+            Mockito.`when`(createRun(run))
+                    .thenReturn(Observable.just(run.copy(id = "RUN_UUID")))
         }
 
         activity.apply {
@@ -75,7 +77,7 @@ class RunnerLocationActivityTest : RobolectricTest() {
         val shadowActivity = ShadowExtractor.extract(activity) as ShadowActivity
         val actualIntent = shadowActivity.nextStartedActivity
         val expectedIntent = Intent(activity, OrderDetailsActivity::class.java).apply {
-            putExtra(RUN_UUID, "RUN_UUID")
+            putExtra(RUN, Run("Herp derp", "The Plain", id = "RUN_UUID"))
         }
         assertEquals(expectedIntent, actualIntent)
     }

@@ -1,7 +1,6 @@
 package pivotal.io.ankopirun.views.activities
 
 import android.os.Bundle
-
 import android.support.v7.app.AppCompatActivity
 import android.widget.Button
 import android.widget.EditText
@@ -11,8 +10,8 @@ import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 import pivotal.io.ankopirun.App
 import pivotal.io.ankopirun.R
+import pivotal.io.ankopirun.RUN
 import pivotal.io.ankopirun.RUNNER_NAME
-import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.RunRepository
 import rx.Scheduler
@@ -72,7 +71,7 @@ class RunnerLocationActivity : AppCompatActivity() {
             .observeOn(Schedulers.immediate())
             .subscribeWith {
                 onNext {
-                    startActivity<OrderDetailsActivity>(RUN_UUID to it.id)
+                    startActivity<OrderDetailsActivity>(RUN to it)
                 }
 
                 onError {
