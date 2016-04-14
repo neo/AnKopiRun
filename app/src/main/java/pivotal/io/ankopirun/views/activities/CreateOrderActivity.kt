@@ -11,6 +11,7 @@ import org.jetbrains.anko.*
 import pivotal.io.ankopirun.App
 
 import pivotal.io.ankopirun.R
+import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.repositories.OrderRepository
 import pivotal.io.ankopirun.repositories.RunRepository
@@ -70,8 +71,10 @@ class CreateOrderActivity : AppCompatActivity(), TimerView {
     override fun onResume() {
         super.onResume()
 
+        val runUuid = intent.extras.getString(RUN_UUID)
+
         runRepository.clockSkew()
-                .zipWith(runRepository.lastRun(), { clockSkew, run -> Pair(clockSkew, run) })
+                .zipWith(runRepository.getRun(runUuid), { clockSkew, run -> Pair(clockSkew, run) })
                 .subscribeOn(io)
                 .observeOn(mainThread)
                 .subscribeWith {
@@ -90,7 +93,7 @@ class CreateOrderActivity : AppCompatActivity(), TimerView {
                                             runUuid = run.id)
                             )
 
-                            startActivity<OrderDetailsActivity>()
+                            startActivity<OrderDetailsActivity>(RUN_UUID to run.id)
                         }
                     }
 

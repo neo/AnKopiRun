@@ -15,7 +15,6 @@ import pivotal.io.ankopirun.RUNNER_NAME
 import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.RunRepository
-import rx.Observable
 import rx.Scheduler
 import rx.lang.kotlin.subscribeWith
 import rx.schedulers.Schedulers
