@@ -12,7 +12,7 @@
         <TextView
             style="@style/SubtitleStyle"
             android:layout_marginBottom="8dp"
-            android:text="@string/ongoing_runs"/>
+            android:text="@string/select_a_run"/>
 
         <pivotal.io.ankopirun.views.RunListRecyclerView
             android:id="@+id/run_list"

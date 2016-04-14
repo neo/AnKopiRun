@@ -9,7 +9,10 @@ class RunListPresenterImpl(val runRepository: RunRepository,
                            val ioScheduler: Scheduler,
                            val mainThreadScheduler: Scheduler) : RunListPresenter {
 
-    var view: RunListView? = null
+    override var view: RunListView? = null
+        set(value) {
+            field = value
+        }
 
     override fun populateRunList() {
         runRepository.getRuns()
