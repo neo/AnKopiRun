@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import org.jetbrains.anko.find
+import org.jetbrains.anko.*
 import pivotal.io.ankopirun.ORDER_LIST_COLORS
 import pivotal.io.ankopirun.R
 import pivotal.io.ankopirun.models.Order
@@ -22,6 +22,7 @@ class OrderListAdapter : RecyclerView.Adapter<OrderListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val order = mDataset.get(position)
+
         holder.apply {
             nameTextView.apply {
                 val name = order.requesterName

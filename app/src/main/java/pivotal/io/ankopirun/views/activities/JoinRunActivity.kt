@@ -7,7 +7,7 @@ import org.jetbrains.anko.find
 import pivotal.io.ankopirun.App
 import pivotal.io.ankopirun.R
 import pivotal.io.ankopirun.views.RunListRecyclerView
-import pivotal.io.ankopirun.widgets.orderlist.RunListAdapter
+import pivotal.io.ankopirun.widgets.runlist.RunListAdapter
 import pivotal.io.ankopirun.widgets.runlist.RunListPresenter
 import javax.inject.Inject
 
