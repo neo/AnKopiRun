@@ -8,11 +8,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import org.jetbrains.anko.*
-import pivotal.io.ankopirun.App
+import pivotal.io.ankopirun.*
 
-import pivotal.io.ankopirun.R
-import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.models.Order
+import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.OrderRepository
 import pivotal.io.ankopirun.repositories.RunRepository
 import pivotal.io.ankopirun.views.TimerView
@@ -61,7 +60,9 @@ class CreateOrderActivity : AppCompatActivity(), TimerView {
 
         initials = find<EditText>(R.id.initials)
         orderDescription = find<EditText>(R.id.order_description)
-        createOrder = find<Button>(R.id.create_btn)
+        createOrder = find<Button>(R.id.create_btn).apply {
+            isEnabled = false
+        }
 
         countDownPresenter = CountDownPresenterImpl(countDownTimer).apply {
             view = this@CreateOrderActivity
@@ -71,21 +72,20 @@ class CreateOrderActivity : AppCompatActivity(), TimerView {
     override fun onResume() {
         super.onResume()
 
-        val runUuid = intent.extras.getString(RUN_UUID)
+        val run = intent.extras.getSerializable(RUN) as Run
 
         runRepository.clockSkew()
-                .zipWith(runRepository.getRun(runUuid), { clockSkew, run -> Pair(clockSkew, run) })
                 .subscribeOn(io)
                 .observeOn(mainThread)
                 .subscribeWith {
                     onNext {
-                        val (clockSkew, run) = it
                         val calculator = CountDownCalculator(run,
                                 System.currentTimeMillis(),
-                                clockSkew)
+                                it)
 
                         countDownPresenter.startCountDown(calculator.durationInMilliseconds())
 
+                        createOrder.isEnabled = true
                         createOrder.setOnClickListener {
                             orderRepository.createOrder(
                                     Order(orderDescription.text.toString(),
@@ -93,7 +93,7 @@ class CreateOrderActivity : AppCompatActivity(), TimerView {
                                             runUuid = run.id)
                             )
 
-                            startActivity<OrderDetailsActivity>(RUN_UUID to run.id)
+                            startActivity<OrderDetailsActivity>(RUN to run)
                         }
                     }
 

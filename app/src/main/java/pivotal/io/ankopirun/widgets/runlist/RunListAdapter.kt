@@ -10,10 +10,9 @@ import android.widget.TextView
 import org.jetbrains.anko.*
 import pivotal.io.ankopirun.ORDER_LIST_COLORS
 import pivotal.io.ankopirun.R
-import pivotal.io.ankopirun.RUN_UUID
+import pivotal.io.ankopirun.RUN
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.views.activities.CreateOrderActivity
-import pivotal.io.ankopirun.views.activities.OrderDetailsActivity
 
 class RunListAdapter : RecyclerView.Adapter<RunListAdapter.ViewHolder>() {
 
@@ -28,7 +27,7 @@ class RunListAdapter : RecyclerView.Adapter<RunListAdapter.ViewHolder>() {
 
         holder.itemView.apply {
             setOnClickListener {
-                context.startActivity<CreateOrderActivity>(RUN_UUID to run.id)
+                context.startActivity<CreateOrderActivity>(RUN to run)
             }
         }
 

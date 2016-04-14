@@ -9,7 +9,9 @@ import android.widget.TextView
 import org.jetbrains.anko.find
 import pivotal.io.ankopirun.App
 import pivotal.io.ankopirun.R
+import pivotal.io.ankopirun.RUN
 import pivotal.io.ankopirun.RUN_UUID
+import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.OrderRepository
 import pivotal.io.ankopirun.repositories.RunRepository
 import pivotal.io.ankopirun.views.OrderListRecyclerView
@@ -75,18 +77,17 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
     override fun onResume() {
         super.onResume()
 
-        val runUuid = intent.extras.getString(RUN_UUID)
+        val run = intent.extras.getSerializable(RUN) as Run
 
         runRepository.clockSkew()
-                .zipWith(runRepository.getRun(runUuid), { clockSkew, run -> Pair(clockSkew, run) })
                 .subscribeOn(io)
                 .observeOn(mainThread)
                 .subscribeWith {
                     onNext {
-                        val (clockSkew, run) = it
                         val calculator = CountDownCalculator(run,
                                 System.currentTimeMillis(),
-                                clockSkew)
+                                it)
+
                         countDownPresenter.startCountDown(calculator.durationInMilliseconds())
                         orderListPresenter.populateOrderList(run.id)
                     }
