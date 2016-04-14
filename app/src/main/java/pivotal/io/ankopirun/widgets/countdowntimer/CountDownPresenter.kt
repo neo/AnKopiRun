@@ -1,8 +1,11 @@
 package pivotal.io.ankopirun.widgets.countdowntimer
 
+import pivotal.io.ankopirun.views.TimerView
 import java.util.concurrent.TimeUnit
 
 interface CountDownPresenter {
+
+    var view: TimerView?
 
     fun startCountDown(durationInMilliseconds: Long)
 
@@ -15,5 +18,6 @@ interface CountDownPresenter {
                         TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(milliseconds))
         );
     }
+
 }
 

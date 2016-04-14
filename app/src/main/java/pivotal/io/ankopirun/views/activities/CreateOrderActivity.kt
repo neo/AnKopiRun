@@ -27,12 +27,6 @@ import javax.inject.Named
 class CreateOrderActivity : AppCompatActivity(), TimerView {
     val TAG = lazy { this.localClassName }
 
-    @Inject
-    lateinit var runRepository: RunRepository
-
-    @Inject
-    lateinit var countDownTimer: CountDownTimer
-
     @field:[Inject Named("io")]
     lateinit var io: Scheduler
 
@@ -40,8 +34,15 @@ class CreateOrderActivity : AppCompatActivity(), TimerView {
     lateinit var mainThread: Scheduler
 
     @Inject
+    lateinit var runRepository: RunRepository
+
+    @Inject
+    lateinit var countDownTimer: CountDownTimer
+
+    @Inject
     lateinit var orderRepository: OrderRepository
 
+    @Inject
     lateinit var countDownPresenter: CountDownPresenter
 
     lateinit var initials: EditText
@@ -64,9 +65,7 @@ class CreateOrderActivity : AppCompatActivity(), TimerView {
             isEnabled = false
         }
 
-        countDownPresenter = CountDownPresenterImpl(countDownTimer).apply {
-            view = this@CreateOrderActivity
-        }
+        countDownPresenter.view = this@CreateOrderActivity
     }
 
     override fun onResume() {

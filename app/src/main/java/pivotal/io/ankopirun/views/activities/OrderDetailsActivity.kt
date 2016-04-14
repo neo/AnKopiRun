@@ -10,7 +10,6 @@ import org.jetbrains.anko.find
 import pivotal.io.ankopirun.App
 import pivotal.io.ankopirun.R
 import pivotal.io.ankopirun.RUN
-import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.OrderRepository
 import pivotal.io.ankopirun.repositories.RunRepository
@@ -18,7 +17,6 @@ import pivotal.io.ankopirun.views.OrderListRecyclerView
 import pivotal.io.ankopirun.views.TimerView
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenter
-import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenterImpl
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
 import pivotal.io.ankopirun.widgets.orderlist.OrderListAdapter
 import pivotal.io.ankopirun.widgets.orderlist.OrderListPresenter
@@ -30,9 +28,16 @@ import javax.inject.Named
 class OrderDetailsActivity : AppCompatActivity(), TimerView {
     val TAG = lazy { this.localClassName }
 
+    @field:[Inject Named("io")]
+    lateinit var io: Scheduler
+
+    @field:[Inject Named("mainThread")]
+    lateinit var mainThread: Scheduler
+
     lateinit var timerText: TextView
     lateinit var orderList: OrderListRecyclerView
 
+    @Inject
     lateinit var countDownPresenter: CountDownPresenter
 
     @Inject
@@ -44,11 +49,6 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
     @Inject
     lateinit var runRepository: RunRepository
 
-    @field:[Inject Named("io")]
-    lateinit var io: Scheduler
-
-    @field:[Inject Named("mainThread")]
-    lateinit var mainThread: Scheduler
 
     @Inject
     lateinit var orderRepository: OrderRepository
@@ -66,11 +66,7 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
             adapter = OrderListAdapter()
         }
 
-        // TODO: Dagger this.
-        countDownPresenter = CountDownPresenterImpl(countDownTimer).apply {
-            view = this@OrderDetailsActivity
-        }
-
+        countDownPresenter.view = this@OrderDetailsActivity
         orderListPresenter.view = orderList
     }
 

@@ -1,13 +1,13 @@
 package pivotal.io.ankopirun.widgets.countdowntimer
 
 import pivotal.io.ankopirun.views.TimerView
-import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
-import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenter
-import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
 
 class CountDownPresenterImpl(val countDownTimer: CountDownTimer) : CountDownPresenter {
 
-    var view: TimerView? = null
+    override var view: TimerView? = null
+        set(value) {
+            field = value
+        }
 
     override fun startCountDown(durationInMilliseconds: Long) {
         countDownTimer.apply {

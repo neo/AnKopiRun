@@ -1,7 +1,7 @@
 package pivotal.io.ankopirun.views.activities
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import org.jetbrains.anko.find
 import pivotal.io.ankopirun.App

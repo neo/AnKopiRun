@@ -2,12 +2,18 @@ package pivotal.io.ankopirun.widgets.countdowntimer
 
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import pivotal.io.ankopirun.views.TimerView
 
 class CountDownPresenterTest {
 
     @Test
     fun formatsTimeInMillisecondsToMinutesAndSeconds() {
         class Presenter : CountDownPresenter {
+            override var view: TimerView? = null
+                set(value) {
+                    field = value
+                }
+
             override fun startCountDown(durationInMilliseconds: Long) {
             }
 

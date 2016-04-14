@@ -9,4 +9,3 @@ interface RunListPresenter {
     fun populateRunList()
 
 }
-
