@@ -11,6 +11,7 @@ import org.robolectric.Robolectric
 import org.robolectric.internal.ShadowExtractor
 import org.robolectric.shadows.ShadowActivity
 import pivotal.io.ankopirun.R
+import pivotal.io.ankopirun.RUN
 import pivotal.io.ankopirun.RobolectricTest
 import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.models.Run
@@ -24,11 +25,13 @@ class CreateOrderActivityTest : RobolectricTest() {
 
     @Test
     fun resumingActivityStartsCountDownTimer() {
-        val activityController = Robolectric.buildActivity(CreateOrderActivity::class.java)
+        val intent = Intent().putExtra(RUN, Run(id = "runUuid"))
+        val activityController = Robolectric
+                .buildActivity(CreateOrderActivity::class.java)
+                .withIntent(intent)
         val activity = activityController.create().get().apply {
             countDownPresenter = mock(CountDownPresenter::class.java)
             runRepository = mock(RunRepository::class.java).apply {
-                `when`(lastRun()).thenReturn(Observable.just(Run()))
                 `when`(clockSkew()).thenReturn(Observable.just(1))
             }
             mainThread = Schedulers.immediate()
@@ -43,10 +46,12 @@ class CreateOrderActivityTest : RobolectricTest() {
 
     @Test
     fun clickingOKButtonCreatesAnOrder() {
-        val activityController = Robolectric.buildActivity(CreateOrderActivity::class.java)
+        val intent = Intent().putExtra(RUN, Run(id = "runUuid"))
+        val activityController = Robolectric
+                .buildActivity(CreateOrderActivity::class.java)
+                .withIntent(intent)
         val activity = activityController.create().get().apply {
             runRepository = mock(RunRepository::class.java).apply {
-                `when`(lastRun()).thenReturn(Observable.just(Run(id = "runUuid")))
                 `when`(clockSkew()).thenReturn(Observable.just(1))
             }
             mainThread = Schedulers.immediate()
@@ -71,10 +76,12 @@ class CreateOrderActivityTest : RobolectricTest() {
 
     @Test
     fun clickingOKButtonGoesToOrderDetailsActivity() {
-        val activityController = Robolectric.buildActivity(CreateOrderActivity::class.java)
+        val intent = Intent().putExtra(RUN, Run(id = "runUuid"))
+        val activityController = Robolectric
+                .buildActivity(CreateOrderActivity::class.java)
+                .withIntent(intent)
         val activity = activityController.create().get().apply {
             runRepository = mock(RunRepository::class.java).apply {
-                `when`(lastRun()).thenReturn(Observable.just(Run(id = "runUuid")))
                 `when`(clockSkew()).thenReturn(Observable.just(1))
             }
             mainThread = Schedulers.immediate()
@@ -96,7 +103,9 @@ class CreateOrderActivityTest : RobolectricTest() {
 
         val shadowActivity = ShadowExtractor.extract(activity) as ShadowActivity
         val actualIntent = shadowActivity.nextStartedActivity
-        val expectedIntent = Intent(activity, OrderDetailsActivity::class.java)
+        val expectedIntent = Intent(activity, OrderDetailsActivity::class.java).apply {
+            putExtra(RUN, Run(id = "runUuid"))
+        }
 
         assertEquals(expectedIntent, actualIntent)
     }

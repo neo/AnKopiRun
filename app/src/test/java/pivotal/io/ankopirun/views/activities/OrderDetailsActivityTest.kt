@@ -4,6 +4,7 @@ import android.content.Intent
 import org.junit.Test
 import org.mockito.Mockito.*
 import org.robolectric.Robolectric
+import pivotal.io.ankopirun.RUN
 import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.RobolectricTest
 import pivotal.io.ankopirun.models.Order
@@ -18,7 +19,7 @@ class OrderDetailsActivityTest : RobolectricTest() {
 
     @Test
     fun resumingActivityStartsCountDownTimer() {
-        val intent = Intent().putExtra(RUN_UUID, "id")
+        val intent = Intent().putExtra(RUN, Run(id = "id"))
         val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java).withIntent(intent)
         val activity = activityController.create().get().apply {
             countDownPresenter = mock(CountDownPresenter::class.java)
@@ -50,7 +51,7 @@ class OrderDetailsActivityTest : RobolectricTest() {
 
     @Test
     fun resumingActivityPopulatesOrderList() {
-        val intent = Intent().putExtra(RUN_UUID, "id")
+        val intent = Intent().putExtra(RUN, Run(id = "id"))
         val listOfOrders = listOf(Order(), Order(), Order())
         val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java).withIntent(intent)
         val activity = activityController.create().get().apply {
