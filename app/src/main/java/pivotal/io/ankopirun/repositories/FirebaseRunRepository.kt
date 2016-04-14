@@ -9,11 +9,22 @@ import rx.Observable
 
 class FirebaseRunRepository(val baseUrl: String) : RunRepository {
 
-    override fun create(run: Run) {
+    override fun createRun(run: Run): Observable<Run> {
         val ref = Firebase("$baseUrl/runs")
         val runRef = ref.push()
+
         runRef.setValue(run)
-        runRef.child("startTime").setValue(ServerValue.TIMESTAMP)
+
+        return Observable.create<Run> { subscriber ->
+            runRef.child("startTime").setValue(ServerValue.TIMESTAMP, Firebase.CompletionListener { firebaseError, firebase ->
+                if (firebaseError == null) {
+                    subscriber.onNext(run.copy(id = runRef.key))
+                    subscriber.onCompleted()
+                } else{
+                    subscriber.onError(firebaseError.toException())
+                }
+            })
+        }
     }
 
     override fun lastRun(): Observable<Run> {
@@ -52,6 +63,15 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
                         it.getValue(Run::class.java).apply { id = it.key }
                     }
                 }
+    }
+
+    override fun getRun(runUuid: String): Observable<Run> {
+        val ref = Firebase("$baseUrl/runs")
+        val query = ref.orderByKey().equalTo(runUuid)
+
+        return RxFirebase.getInstance()
+                .observeValueEvent(query)
+                .map { it.getValue(Run::class.java) }
     }
 
 }

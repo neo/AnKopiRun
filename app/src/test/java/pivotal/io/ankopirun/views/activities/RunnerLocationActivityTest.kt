@@ -6,19 +6,23 @@ import com.natpryce.hamkrest.isEmptyString
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.verify
 import org.robolectric.Robolectric
 import org.robolectric.internal.ShadowExtractor
 import org.robolectric.shadows.ShadowActivity
 import pivotal.io.ankopirun.RUNNER_NAME
+import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.RobolectricTest
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.RunRepository
+import rx.Observable
+import rx.schedulers.Schedulers
 
 class RunnerLocationActivityTest : RobolectricTest() {
     lateinit var activity: RunnerLocationActivity
-    lateinit var runRepository: RunRepository
+    lateinit var mockRunRepository: RunRepository
 
     @Before
     fun setUp() {
@@ -27,8 +31,16 @@ class RunnerLocationActivityTest : RobolectricTest() {
                 .create()
                 .get()
 
-        runRepository = mock(RunRepository::class.java)
-        activity.runRepository = runRepository
+        mockRunRepository = mock(RunRepository::class.java).apply {
+            Mockito.`when`(createRun(Run("Herp derp", "The Plain")))
+                    .thenReturn(Observable.just(Run(id = "RUN_UUID")))
+        }
+
+        activity.apply {
+            runRepository = mockRunRepository
+            io = Schedulers.immediate()
+            mainThread = Schedulers.immediate()
+        }
     }
 
     @Test
@@ -51,7 +63,7 @@ class RunnerLocationActivityTest : RobolectricTest() {
 
         activity.submitLocationButton.performClick()
 
-        verify(runRepository).create(Run("Herp derp", "The Plain"))
+        verify(mockRunRepository).createRun(Run("Herp derp", "The Plain"))
     }
 
     @Test
@@ -62,7 +74,9 @@ class RunnerLocationActivityTest : RobolectricTest() {
 
         val shadowActivity = ShadowExtractor.extract(activity) as ShadowActivity
         val actualIntent = shadowActivity.nextStartedActivity
-        val expectedIntent = Intent(activity, OrderDetailsActivity::class.java)
+        val expectedIntent = Intent(activity, OrderDetailsActivity::class.java).apply {
+            putExtra(RUN_UUID, "RUN_UUID")
+        }
         assertEquals(expectedIntent, actualIntent)
     }
 }

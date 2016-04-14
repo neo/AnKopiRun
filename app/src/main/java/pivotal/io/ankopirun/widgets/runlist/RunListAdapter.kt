@@ -1,4 +1,4 @@
-package pivotal.io.ankopirun.widgets.orderlist
+package pivotal.io.ankopirun.widgets.runlist
 
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
@@ -7,12 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import org.jetbrains.anko.find
+import org.jetbrains.anko.*
 import pivotal.io.ankopirun.ORDER_LIST_COLORS
 import pivotal.io.ankopirun.R
-import pivotal.io.ankopirun.models.Order
+import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.models.Run
-import pivotal.io.ankopirun.views.RunListView
+import pivotal.io.ankopirun.views.activities.OrderDetailsActivity
 
 class RunListAdapter : RecyclerView.Adapter<RunListAdapter.ViewHolder>() {
 
@@ -24,6 +24,13 @@ class RunListAdapter : RecyclerView.Adapter<RunListAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val run = mDataset.get(position)
+
+        holder.itemView.apply {
+            setOnClickListener {
+                context.startActivity<OrderDetailsActivity>(RUN_UUID to run.id)
+            }
+        }
+
         holder.apply {
             nameTextView.apply {
                 val name = run.name

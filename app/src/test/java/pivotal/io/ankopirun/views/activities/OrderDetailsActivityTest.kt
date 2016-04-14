@@ -1,8 +1,10 @@
 package pivotal.io.ankopirun.views.activities
 
+import android.content.Intent
 import org.junit.Test
 import org.mockito.Mockito.*
 import org.robolectric.Robolectric
+import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.RobolectricTest
 import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.models.Run
@@ -16,11 +18,12 @@ class OrderDetailsActivityTest : RobolectricTest() {
 
     @Test
     fun resumingActivityStartsCountDownTimer() {
-        val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java)
+        val intent = Intent().putExtra(RUN_UUID, "id")
+        val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java).withIntent(intent)
         val activity = activityController.create().get().apply {
             countDownPresenter = mock(CountDownPresenter::class.java)
             runRepository = mock(RunRepository::class.java).apply {
-                `when`(lastRun()).thenReturn(Observable.just(Run()))
+                `when`(getRun("id")).thenReturn(Observable.just(Run("id")))
                 `when`(clockSkew()).thenReturn(Observable.just(1))
             }
             mainThread = Schedulers.immediate()
@@ -47,12 +50,13 @@ class OrderDetailsActivityTest : RobolectricTest() {
 
     @Test
     fun resumingActivityPopulatesOrderList() {
+        val intent = Intent().putExtra(RUN_UUID, "id")
         val listOfOrders = listOf(Order(), Order(), Order())
-        val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java)
+        val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java).withIntent(intent)
         val activity = activityController.create().get().apply {
             countDownPresenter = mock(CountDownPresenter::class.java)
             runRepository = mock(RunRepository::class.java).apply {
-                `when`(lastRun()).thenReturn(Observable.just(Run(id = "id")))
+                `when`(getRun("id")).thenReturn(Observable.just(Run(id = "id")))
                 `when`(clockSkew()).thenReturn(Observable.just(1))
                 `when`(getOrders()).thenReturn(Observable.just(listOfOrders))
             }

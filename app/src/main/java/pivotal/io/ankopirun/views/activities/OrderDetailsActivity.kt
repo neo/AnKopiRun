@@ -9,6 +9,7 @@ import android.widget.TextView
 import org.jetbrains.anko.find
 import pivotal.io.ankopirun.App
 import pivotal.io.ankopirun.R
+import pivotal.io.ankopirun.RUN_UUID
 import pivotal.io.ankopirun.repositories.OrderRepository
 import pivotal.io.ankopirun.repositories.RunRepository
 import pivotal.io.ankopirun.views.OrderListRecyclerView
@@ -74,8 +75,10 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
     override fun onResume() {
         super.onResume()
 
+        val runUuid = intent.extras.getString(RUN_UUID)
+
         runRepository.clockSkew()
-                .zipWith(runRepository.lastRun(), { clockSkew, run -> Pair(clockSkew, run) })
+                .zipWith(runRepository.getRun(runUuid), { clockSkew, run -> Pair(clockSkew, run) })
                 .subscribeOn(io)
                 .observeOn(mainThread)
                 .subscribeWith {
