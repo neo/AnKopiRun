@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".views.activities.CreateOrderActivity">
         </activity>
+        <activity android:name=".views.activities.JoinRunActivity">
+        </activity>
     </application>
 
 </manifest>

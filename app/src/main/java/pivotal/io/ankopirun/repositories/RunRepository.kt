@@ -13,5 +13,7 @@ interface RunRepository {
     fun clockSkew(): Observable<Long>
 
     fun getOrders(): Observable<List<Order>>
+
+    fun getRuns(): Observable<List<Run>>
 }
 

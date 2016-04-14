@@ -8,6 +8,7 @@ import pivotal.io.ankopirun.models.Run
 import rx.Observable
 
 class FirebaseRunRepository(val baseUrl: String) : RunRepository {
+
     override fun create(run: Run) {
         val ref = Firebase("$baseUrl/runs")
         val runRef = ref.push()
@@ -39,4 +40,18 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
     override fun getOrders(): Observable<List<Order>> {
         throw UnsupportedOperationException()
     }
+
+    override fun getRuns(): Observable<List<Run>> {
+        val ref = Firebase("$baseUrl/runs")
+
+        return RxFirebase.getInstance()
+                .observeValueEvent(ref)
+                .map {
+                    snapshot ->
+                    snapshot.children.map {
+                        it.getValue(Run::class.java).apply { id = it.key }
+                    }
+                }
+    }
+
 }

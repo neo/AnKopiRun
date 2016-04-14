@@ -19,7 +19,6 @@ import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenterImpl
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
 import pivotal.io.ankopirun.widgets.orderlist.OrderListAdapter
 import pivotal.io.ankopirun.widgets.orderlist.OrderListPresenter
-import pivotal.io.ankopirun.widgets.orderlist.OrderListPresenterImpl
 import rx.Scheduler
 import rx.lang.kotlin.subscribeWith
 import javax.inject.Inject
@@ -32,6 +31,8 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
     lateinit var orderList: OrderListRecyclerView
 
     lateinit var countDownPresenter: CountDownPresenter
+
+    @Inject
     lateinit var orderListPresenter: OrderListPresenter
 
     @Inject
@@ -67,10 +68,7 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
             view = this@OrderDetailsActivity
         }
 
-        // TODO: Dagger this.
-        orderListPresenter = OrderListPresenterImpl(orderRepository, io, mainThread).apply {
-            view = orderList
-        }
+        orderListPresenter.view = orderList
     }
 
     override fun onResume() {
@@ -102,7 +100,6 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
     }
 
     override fun setTimerText(tick: Long) {
-        // TODO: Don't allow negative value for timer
-        timerText.text = countDownPresenter.format(tick)
+        timerText.text = countDownPresenter.format(Math.max(0, tick))
     }
 }

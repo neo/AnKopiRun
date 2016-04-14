@@ -42,11 +42,12 @@ class CreateOrderActivity : AppCompatActivity(), TimerView {
     @Inject
     lateinit var orderRepository: OrderRepository
 
+    lateinit var countDownPresenter: CountDownPresenter
+
     lateinit var initials: EditText
     lateinit var orderDescription: EditText
     lateinit var createOrder: Button
     lateinit var timerText: TextView
-    lateinit var countDownPresenter: CountDownPresenter
 
 
     override fun onCreate(savedInstanceState: Bundle?) {

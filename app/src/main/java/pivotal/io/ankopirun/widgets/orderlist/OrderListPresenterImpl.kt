@@ -8,7 +8,11 @@ import rx.lang.kotlin.subscribeWith
 class OrderListPresenterImpl(val orderRepository: OrderRepository,
                              val ioScheduler: Scheduler,
                              val mainThreadScheduler: Scheduler) : OrderListPresenter {
-    var view: OrderListView? = null
+
+    override var view: OrderListView? = null
+        set(value) {
+            field = value
+        }
 
     override fun populateOrderList(runUuid: String) {
         orderRepository.getOrders(runUuid)
