@@ -1,15 +1,16 @@
 package pivotal.io.ankopirun.views.activities
 
-import android.support.v7.app.AppCompatActivity
-
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
-import org.jetbrains.anko.*
-import pivotal.io.ankopirun.*
-
+import org.jetbrains.anko.find
+import org.jetbrains.anko.startActivity
+import pivotal.io.ankopirun.App
+import pivotal.io.ankopirun.R
+import pivotal.io.ankopirun.RUN
 import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.OrderRepository
@@ -17,7 +18,6 @@ import pivotal.io.ankopirun.repositories.RunRepository
 import pivotal.io.ankopirun.views.TimerView
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenter
-import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenterImpl
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
 import rx.Scheduler
 import rx.lang.kotlin.subscribeWith
@@ -78,28 +78,31 @@ class CreateOrderActivity : AppCompatActivity(), TimerView {
                 .observeOn(mainThread)
                 .subscribeWith {
                     onNext {
-                        val calculator = CountDownCalculator(run,
-                                System.currentTimeMillis(),
-                                it)
-
+                        val calculator = CountDownCalculator(run, System.currentTimeMillis(), it)
                         countDownPresenter.startCountDown(calculator.durationInMilliseconds())
-
-                        createOrder.isEnabled = true
-                        createOrder.setOnClickListener {
-                            orderRepository.createOrder(
-                                    Order(orderDescription.text.toString(),
-                                            initials.text.toString(),
-                                            runUuid = run.id)
-                            )
-
-                            startActivity<OrderDetailsActivity>(RUN to run)
-                        }
+                        setupCreateOrderButton(run)
                     }
 
                     onError {
                         Log.d(TAG.value, it.message)
                     }
                 }
+
+    }
+
+    private fun setupCreateOrderButton(run: Run) {
+        createOrder.apply {
+            isEnabled = true
+            setOnClickListener {
+                orderRepository.createOrder(
+                        Order(orderDescription.text.toString(),
+                                initials.text.toString(),
+                                runUuid = run.id)
+                )
+
+                startActivity<OrderDetailsActivity>(RUN to run)
+            }
+        }
     }
 
     override fun onPause() {

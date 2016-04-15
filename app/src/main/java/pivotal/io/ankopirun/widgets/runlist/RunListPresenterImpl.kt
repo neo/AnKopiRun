@@ -19,16 +19,18 @@ class RunListPresenterImpl(val runRepository: RunRepository,
 
     override fun populateRunList() {
         runRepository.getRuns()
-            .subscribeOn(ioScheduler)
-            .observeOn(mainThreadScheduler)
-            .subscribeWith {
-                onNext {
-                    it.forEach {
-                        run -> view?.addRun(run)
+                .subscribeOn(ioScheduler)
+                .observeOn(mainThreadScheduler)
+                .doOnUnsubscribe { /* no-op */ }
+                .subscribeWith {
+                    onNext {
+                        it.forEach {
+                            run ->
+                            view?.addRun(run)
+                        }
                     }
+                    onCompleted { /* no-op */}
                 }
-            }
     }
-
 }
 

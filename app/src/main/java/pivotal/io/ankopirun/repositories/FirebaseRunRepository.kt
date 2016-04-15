@@ -1,12 +1,10 @@
 package pivotal.io.ankopirun.repositories
 
-import com.firebase.client.Firebase
-import com.firebase.client.ServerValue
+import com.firebase.client.*
 import com.soikonomakis.rxfirebase.RxFirebase
-import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.models.Run
 import rx.Observable
-import rx.lang.kotlin.subscriber
+import rx.subscriptions.Subscriptions
 
 class FirebaseRunRepository(val baseUrl: String) : RunRepository {
 
@@ -23,8 +21,7 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
     override fun lastRun(): Observable<Run> {
         val ref = Firebase("$baseUrl/runs")
 
-        return RxFirebase.getInstance()
-                .observeSingleValue(ref)
+        return observeSingleValue(ref)
                 .map {
                     val run = it.children.last()
                     run.getValue(Run::class.java).apply {
@@ -36,24 +33,20 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
     override fun clockSkew(): Observable<Long> {
         val ref = Firebase("$baseUrl/.info/serverTimeOffset")
 
-        return RxFirebase.getInstance()
-                .observeValueEvent(ref)
+        return observeSingleValue(ref)
                 .map { it.getValue(Long::class.java) }
-    }
-
-    override fun getOrders(): Observable<List<Order>> {
-        throw UnsupportedOperationException()
     }
 
     override fun getRuns(): Observable<List<Run>> {
         val ref = Firebase("$baseUrl/runs")
 
-        return RxFirebase.getInstance()
-                .observeValueEvent(ref)
+        return observeSingleValue(ref)
                 .map {
                     snapshot ->
                     snapshot.children.map {
-                        it.getValue(Run::class.java).apply { id = it.key }
+                        it.getValue(Run::class.java).apply {
+                            id = it.key
+                        };
                     }
                 }
     }
@@ -62,9 +55,22 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
         val ref = Firebase("$baseUrl/runs")
         val query = ref.orderByKey().equalTo(runUuid)
 
-        return RxFirebase.getInstance()
-                .observeValueEvent(query)
+        return observeSingleValue(query)
                 .map { it.children.first().getValue(Run::class.java) }
+    }
+
+    override fun getAddedRuns(): Observable<Run> {
+        val ref = Firebase("$baseUrl/runs")
+
+        return RxFirebase.getInstance()
+                .observeChildAdded(ref)
+                .map {
+                    //TODO: CHECK IF THIS IS VALID
+                        it.dataSnapshot.getValue(Run::class.java).apply {
+                            id = it.dataSnapshot.key
+                        };
+                    }
+                }
     }
 
     internal fun observeCompleteEvent(ref: Firebase, value: Any): Observable<Boolean> {
@@ -79,4 +85,24 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
         }
     }
 
+    internal fun observeSingleValue(ref: Query): Observable<DataSnapshot> {
+        return Observable.create { subscriber ->
+            val listener = object : ValueEventListener {
+                override fun onCancelled(error: FirebaseError) {
+                    subscriber.onError(error.toException())
+                }
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    subscriber.onNext(snapshot)
+                    subscriber.onCompleted()
+                }
+            }
+
+            ref.addValueEventListener(listener)
+
+            subscriber.add(Subscriptions.create {
+                ref.removeEventListener(listener)
+            })
+        }
+    }
 }

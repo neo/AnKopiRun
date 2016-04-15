@@ -12,7 +12,7 @@ class FirebaseOrderRepository(val baseUrl: String) : OrderRepository {
         val query = ref.orderByChild("runUuid").equalTo(runUuid)
 
         return RxFirebase.getInstance()
-                .observeValueEvent(query)
+                .observeSingleValue(query)
                 .map { it.children.map { it.getValue(Order::class.java) } }
     }
 
