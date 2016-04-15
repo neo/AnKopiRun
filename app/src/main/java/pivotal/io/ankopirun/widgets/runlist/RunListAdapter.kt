@@ -64,4 +64,8 @@ class RunListAdapter : RecyclerView.Adapter<RunListAdapter.ViewHolder>() {
     fun add(run: Run) {
         mDataset.add(run)
     }
+
+    fun clear() {
+        mDataset.clear()
+    }
 }

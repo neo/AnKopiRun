@@ -22,5 +22,17 @@ class JoinRunActivityTest : RobolectricTest() {
 
         verify(activity.runListPresenter).populateRunList()
     }
+
+    @Test
+    fun pausingActivityClearsList() {
+        val activityController = Robolectric.buildActivity(JoinRunActivity::class.java)
+        val activity = activityController.create().resume().get().apply {
+            runListPresenter = mock(RunListPresenter::class.java)
+        }
+
+        activityController.pause()
+
+        verify(activity.runListPresenter).clearList()
+    }
 }
 

@@ -39,4 +39,10 @@ class JoinRunActivity : AppCompatActivity() {
             populateRunList()
         }
     }
+
+    override fun onPause() {
+        super.onPause()
+
+        runListPresenter.clearList()
+    }
 }

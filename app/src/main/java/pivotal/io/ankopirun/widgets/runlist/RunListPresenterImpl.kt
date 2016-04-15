@@ -8,6 +8,9 @@ import rx.lang.kotlin.subscribeWith
 class RunListPresenterImpl(val runRepository: RunRepository,
                            val ioScheduler: Scheduler,
                            val mainThreadScheduler: Scheduler) : RunListPresenter {
+    override fun clearList() {
+        view?.clearRuns()
+    }
 
     override var view: RunListView? = null
         set(value) {

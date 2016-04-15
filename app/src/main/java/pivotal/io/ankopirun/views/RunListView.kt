@@ -6,5 +6,7 @@ interface RunListView {
 
     fun addRun(run: Run)
 
+    fun clearRuns()
+
 }
 

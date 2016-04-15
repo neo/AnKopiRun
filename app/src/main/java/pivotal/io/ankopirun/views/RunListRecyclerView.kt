@@ -8,6 +8,10 @@ import pivotal.io.ankopirun.widgets.runlist.RunListAdapter
 
 class RunListRecyclerView(context: Context?, attrs: AttributeSet?)
     : RecyclerView(context, attrs), RunListView {
+    override fun clearRuns() {
+        (adapter as RunListAdapter).clear()
+        adapter.notifyDataSetChanged()
+    }
 
     override fun addRun(run: Run) {
         (adapter as RunListAdapter).add(run)
