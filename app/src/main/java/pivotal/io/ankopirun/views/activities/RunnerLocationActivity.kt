@@ -16,7 +16,6 @@ import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.RunRepository
 import rx.Scheduler
 import rx.lang.kotlin.subscribeWith
-import rx.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -67,8 +66,8 @@ class RunnerLocationActivity : AppCompatActivity() {
     fun createRun() {
         val run = Run(runnerName, locationField.text.toString())
         runRepository.createRun(run)
-            .subscribeOn(Schedulers.immediate())
-            .observeOn(Schedulers.immediate())
+            .subscribeOn(io)
+            .observeOn(mainThread)
             .subscribeWith {
                 onNext {
                     startActivity<OrderDetailsActivity>(RUN to it)

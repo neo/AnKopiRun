@@ -79,6 +79,7 @@ class RunnerLocationActivityTest : RobolectricTest() {
         val expectedIntent = Intent(activity, OrderDetailsActivity::class.java).apply {
             putExtra(RUN, Run("Herp derp", "The Plain", id = "RUN_UUID"))
         }
+
         assertEquals(expectedIntent, actualIntent)
     }
 }
