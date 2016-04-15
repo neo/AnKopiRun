@@ -51,6 +51,7 @@ class RunnerLocationActivity : AppCompatActivity() {
     private fun initialiseElements() {
         submitLocationButton = find<Button>(R.id.submit_location_btn).apply {
             setOnClickListener {
+                isEnabled = false
                 createRun()
             }
         }
