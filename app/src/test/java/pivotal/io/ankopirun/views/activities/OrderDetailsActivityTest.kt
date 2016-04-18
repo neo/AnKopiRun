@@ -6,7 +6,6 @@ import org.mockito.Mockito.*
 import org.robolectric.Robolectric
 import pivotal.io.ankopirun.RUN
 import pivotal.io.ankopirun.RobolectricTest
-import pivotal.io.ankopirun.models.Order
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.RunRepository
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenter
