@@ -4,7 +4,7 @@ interface CountDownTimer {
 
     fun setOnFinishHandler(handler: () -> Unit)
 
-    fun setOnTickHandler(handler: (millisecondsLeft: Long) -> Unit)
+    fun addOnTickHandler(handler: (millisecondsLeft: Long) -> Unit)
 
     fun cancel()
 

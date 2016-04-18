@@ -8,6 +8,7 @@ import pivotal.io.ankopirun.views.TimerView
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenterImpl
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
+import pivotal.io.ankopirun.widgets.mediaplayer.MediaPlayer
 
 class CountDownPresenterImplTest {
 
@@ -17,7 +18,8 @@ class CountDownPresenterImplTest {
         val mockView = mock(TimerView::class.java)
         val run = Run("Herp derp", "The Plain", duration = 4000, startTime = 1459999675460)
         val calculator = CountDownCalculator(run, 1459999678460)
-        var presenter = CountDownPresenterImpl(countDownTimer).apply {
+        val mediaPlayer = mock(MediaPlayer::class.java)
+        var presenter = CountDownPresenterImpl(countDownTimer, mediaPlayer).apply {
             view = mockView
         }
 
