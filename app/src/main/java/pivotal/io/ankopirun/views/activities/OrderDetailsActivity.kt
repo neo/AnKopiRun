@@ -9,17 +9,17 @@ import android.widget.TextView
 import org.jetbrains.anko.find
 import pivotal.io.ankopirun.App
 import pivotal.io.ankopirun.R
+import pivotal.io.ankopirun.RUN
+import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.repositories.OrderRepository
 import pivotal.io.ankopirun.repositories.RunRepository
 import pivotal.io.ankopirun.views.OrderListRecyclerView
 import pivotal.io.ankopirun.views.TimerView
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownCalculator
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenter
-import pivotal.io.ankopirun.widgets.countdowntimer.CountDownPresenterImpl
 import pivotal.io.ankopirun.widgets.countdowntimer.CountDownTimer
 import pivotal.io.ankopirun.widgets.orderlist.OrderListAdapter
 import pivotal.io.ankopirun.widgets.orderlist.OrderListPresenter
-import pivotal.io.ankopirun.widgets.orderlist.OrderListPresenterImpl
 import rx.Scheduler
 import rx.lang.kotlin.subscribeWith
 import javax.inject.Inject
@@ -28,10 +28,19 @@ import javax.inject.Named
 class OrderDetailsActivity : AppCompatActivity(), TimerView {
     val TAG = lazy { this.localClassName }
 
+    @field:[Inject Named("io")]
+    lateinit var io: Scheduler
+
+    @field:[Inject Named("mainThread")]
+    lateinit var mainThread: Scheduler
+
     lateinit var timerText: TextView
     lateinit var orderList: OrderListRecyclerView
 
+    @Inject
     lateinit var countDownPresenter: CountDownPresenter
+
+    @Inject
     lateinit var orderListPresenter: OrderListPresenter
 
     @Inject
@@ -40,11 +49,6 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
     @Inject
     lateinit var runRepository: RunRepository
 
-    @field:[Inject Named("io")]
-    lateinit var io: Scheduler
-
-    @field:[Inject Named("mainThread")]
-    lateinit var mainThread: Scheduler
 
     @Inject
     lateinit var orderRepository: OrderRepository
@@ -62,30 +66,24 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
             adapter = OrderListAdapter()
         }
 
-        // TODO: Dagger this.
-        countDownPresenter = CountDownPresenterImpl(countDownTimer).apply {
-            view = this@OrderDetailsActivity
-        }
-
-        // TODO: Dagger this.
-        orderListPresenter = OrderListPresenterImpl(orderRepository, io, mainThread).apply {
-            view = orderList
-        }
+        countDownPresenter.view = this@OrderDetailsActivity
+        orderListPresenter.view = orderList
     }
 
     override fun onResume() {
         super.onResume()
 
+        val run = intent.extras.getSerializable(RUN) as Run
+
         runRepository.clockSkew()
-                .zipWith(runRepository.lastRun(), { clockSkew, run -> Pair(clockSkew, run) })
                 .subscribeOn(io)
                 .observeOn(mainThread)
                 .subscribeWith {
                     onNext {
-                        val (clockSkew, run) = it
                         val calculator = CountDownCalculator(run,
                                 System.currentTimeMillis(),
-                                clockSkew)
+                                it)
+
                         countDownPresenter.startCountDown(calculator.durationInMilliseconds())
                         orderListPresenter.populateOrderList(run.id)
                     }
@@ -102,7 +100,6 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
     }
 
     override fun setTimerText(tick: Long) {
-        // TODO: Don't allow negative value for timer
         timerText.text = countDownPresenter.format(tick)
     }
 }

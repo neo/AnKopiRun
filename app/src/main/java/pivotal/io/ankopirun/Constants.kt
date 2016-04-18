@@ -1,6 +1,7 @@
 package pivotal.io.ankopirun
 
 const val RUNNER_NAME = "runner_name"
+const val RUN = "run"
 
 val ORDER_LIST_COLORS = listOf(
         R.color.colorMoxie1,
