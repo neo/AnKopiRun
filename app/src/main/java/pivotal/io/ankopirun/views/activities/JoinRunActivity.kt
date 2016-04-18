@@ -36,13 +36,12 @@ class JoinRunActivity : AppCompatActivity() {
 
         runListPresenter.apply {
             view = runList
-            populateRunList()
+            listen()
         }
     }
 
     override fun onPause() {
         super.onPause()
-
         runListPresenter.clearList()
     }
 }

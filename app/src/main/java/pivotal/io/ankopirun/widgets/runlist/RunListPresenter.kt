@@ -6,8 +6,7 @@ interface RunListPresenter {
 
     var view: RunListView?
 
-    fun populateRunList()
-
     fun clearList()
 
+    fun listen()
 }

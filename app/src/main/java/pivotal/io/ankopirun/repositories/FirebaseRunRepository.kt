@@ -65,7 +65,6 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
         return RxFirebase.getInstance()
                 .observeChildAdded(ref)
                 .map {
-                    //TODO: CHECK IF THIS IS VALID
                     it.dataSnapshot.getValue(Run::class.java).apply {
                         id = it.dataSnapshot.key
                     };

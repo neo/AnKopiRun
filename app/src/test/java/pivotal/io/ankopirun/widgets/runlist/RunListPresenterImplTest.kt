@@ -11,21 +11,20 @@ import rx.schedulers.Schedulers
 class RunListPresenterImplTest {
 
     @Test
-    fun testPopulateRunListAddsRunsToView() {
-        val runs = listOf(Run(), Run(), Run())
+    fun testListenUpdatesView() {
+        val runs = listOf(Run(), Run())
         val repo = mock(RunRepository::class.java).apply {
-            `when`(getRuns()).thenReturn(Observable.just(runs))
+            `when`(getAddedRuns()).thenReturn(Observable.from(runs))
         }
         val scheduler = Schedulers.immediate()
         val presenter = RunListPresenterImpl(repo, scheduler, scheduler).apply {
             view = mock(RunListView::class.java)
         }
 
-        presenter.populateRunList()
+        presenter.listen()
 
-        verify(presenter.view, times(3))?.addRun(Run())
+        verify(presenter.view, times(2))?.addRun(Run())
     }
-
 }
 
 

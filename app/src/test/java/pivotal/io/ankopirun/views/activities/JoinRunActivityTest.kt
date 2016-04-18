@@ -10,17 +10,15 @@ import pivotal.io.ankopirun.widgets.runlist.RunListPresenter
 class JoinRunActivityTest : RobolectricTest() {
 
     @Test
-    fun resumingActivityListsRuns() {
+    fun resumingActivityListensForUpdates() {
         val activityController = Robolectric.buildActivity(JoinRunActivity::class.java)
         val activity = activityController.create().get().apply {
             runListPresenter = mock(RunListPresenter::class.java)
         }
 
-        verifyZeroInteractions(activity.runListPresenter)
-
         activityController.resume()
 
-        verify(activity.runListPresenter).populateRunList()
+        verify(activity.runListPresenter).listen()
     }
 
     @Test
