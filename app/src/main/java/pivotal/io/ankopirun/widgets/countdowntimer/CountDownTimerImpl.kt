@@ -3,15 +3,15 @@ package pivotal.io.ankopirun.widgets.countdowntimer
 class CountDownTimerImpl(val tick: Long = 100) : CountDownTimer {
 
     private var onFinishHandler: (() -> Unit) = {}
-    private var onTickHandler: ((t: Long) -> Unit) = { t -> Unit }
+    private var onTickHandlers: MutableList<((t: Long) -> Unit)> = mutableListOf()
     private var timer: android.os.CountDownTimer? = null
 
     override fun setOnFinishHandler(handler: () -> Unit) {
         onFinishHandler = handler
     }
 
-    override fun setOnTickHandler(handler: (Long) -> Unit) {
-        onTickHandler = handler
+    override fun addOnTickHandler(handler: (Long) -> Unit) {
+        onTickHandlers.add(handler)
     }
 
     override fun cancel() {
@@ -25,7 +25,7 @@ class CountDownTimerImpl(val tick: Long = 100) : CountDownTimer {
             }
 
             override fun onTick(millisUntilFinished: Long) {
-                onTickHandler(millisUntilFinished)
+                onTickHandlers.forEach { it(millisUntilFinished) }
             }
         }.start()
     }
