@@ -6,7 +6,6 @@ import pivotal.io.ankopirun.views.RunListView
 import rx.Scheduler
 import rx.Subscriber
 import rx.exceptions.OnErrorNotImplementedException
-import rx.lang.kotlin.subscribeWith
 
 class RunListPresenterImpl(val runRepository: RunRepository,
                            val ioScheduler: Scheduler,

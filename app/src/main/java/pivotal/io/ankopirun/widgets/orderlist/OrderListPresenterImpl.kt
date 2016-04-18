@@ -14,13 +14,13 @@ class OrderListPresenterImpl(val orderRepository: OrderRepository,
             field = value
         }
 
-    override fun populateOrderList(runUuid: String) {
-        orderRepository.getOrders(runUuid)
+    override fun listen(runUuid: String) {
+        orderRepository.getAddedOrders(runUuid)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainThreadScheduler)
                 .subscribeWith {
                     onNext {
-                        it.forEach { o -> view?.addOrder(o) }
+                        view?.addOrder(it)
                     }
                 }
     }

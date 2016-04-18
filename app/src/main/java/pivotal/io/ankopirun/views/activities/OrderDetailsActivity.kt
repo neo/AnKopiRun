@@ -85,7 +85,7 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
                                 it)
 
                         countDownPresenter.startCountDown(calculator.durationInMilliseconds())
-                        orderListPresenter.populateOrderList(run.id)
+                        orderListPresenter.listen(run.id)
                     }
 
                     onError {

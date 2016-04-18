@@ -11,21 +11,20 @@ import rx.schedulers.Schedulers
 class OrderListPresenterImplTest {
 
     @Test
-    fun populatesOrderListWithOrders() {
+    fun listensForOrderUpdatesAndAddsToList() {
         val mockView = mock(OrderListView::class.java)
         val listOfOrders = listOf(Order(), Order(), Order())
         val runUuid = "runUuid"
         val mockRepo = mock(OrderRepository::class.java).apply {
-            `when`(getOrders(runUuid)).thenReturn(Observable.just(listOfOrders))
+            `when`(getAddedOrders(runUuid)).thenReturn(Observable.from(listOfOrders))
         }
         val scheduler = Schedulers.immediate()
         val presenter = OrderListPresenterImpl(mockRepo, scheduler, scheduler).apply {
             view = mockView
         }
 
-        presenter.populateOrderList(runUuid)
+        presenter.listen(runUuid)
 
         verify(mockView, times(3)).addOrder(Order())
     }
-
 }

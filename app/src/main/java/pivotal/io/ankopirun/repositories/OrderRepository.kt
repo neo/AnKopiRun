@@ -5,7 +5,7 @@ import rx.Observable
 
 interface OrderRepository {
 
-    fun getOrders(runUuid: String): Observable<List<Order>>
+    fun getAddedOrders(runUuid: String): Observable<Order>
 
     fun createOrder(order: Order)
 }

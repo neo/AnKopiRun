@@ -49,7 +49,7 @@ class OrderDetailsActivityTest : RobolectricTest() {
     }
 
     @Test
-    fun resumingActivityPopulatesOrderList() {
+    fun resumingActivityUpdatesOrderList() {
         val intent = Intent().putExtra(RUN, Run(id = "id"))
         val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java).withIntent(intent)
         val activity = activityController.create().get().apply {
@@ -65,6 +65,6 @@ class OrderDetailsActivityTest : RobolectricTest() {
 
         activityController.resume()
 
-        verify(activity.orderListPresenter).populateOrderList("id")
+        verify(activity.orderListPresenter).listen("id")
     }
 }

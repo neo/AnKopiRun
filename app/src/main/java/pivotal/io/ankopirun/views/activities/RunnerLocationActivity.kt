@@ -70,7 +70,7 @@ class RunnerLocationActivity : AppCompatActivity() {
             .subscribeOn(io)
             .observeOn(mainThread)
             .subscribeWith {
-                onNext {
+                onNext { it ->
                     startActivity<OrderDetailsActivity>(RUN to it)
                 }
 

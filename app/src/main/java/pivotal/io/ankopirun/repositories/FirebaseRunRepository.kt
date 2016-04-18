@@ -52,11 +52,12 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
     }
 
     override fun getRun(runUuid: String): Observable<Run> {
-        val ref = Firebase("$baseUrl/runs")
-        val query = ref.orderByKey().equalTo(runUuid)
+        val ref = Firebase("$baseUrl/runs/$runUuid")
 
-        return observeSingleValue(query)
-                .map { it.children.first().getValue(Run::class.java) }
+        return observeSingleValue(ref)
+                .map {
+                    it.getValue(Run::class.java).copy(id = runUuid)
+                }
     }
 
     override fun getAddedRuns(): Observable<Run> {

@@ -6,7 +6,7 @@ interface OrderListPresenter {
 
     var view: OrderListView?
 
-    fun populateOrderList(runUuid: String)
+    fun listen(runUuid: String)
 
 }
 

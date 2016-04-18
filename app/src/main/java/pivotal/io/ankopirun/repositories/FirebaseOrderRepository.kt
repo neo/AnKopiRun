@@ -6,14 +6,13 @@ import pivotal.io.ankopirun.models.Order
 import rx.Observable
 
 class FirebaseOrderRepository(val baseUrl: String) : OrderRepository {
-
-    override fun getOrders(runUuid: String): Observable<List<Order>> {
+    override fun getAddedOrders(runUuid: String): Observable<Order> {
         val ref = Firebase("$baseUrl/orders")
         val query = ref.orderByChild("runUuid").equalTo(runUuid)
 
         return RxFirebase.getInstance()
-                .observeSingleValue(query)
-                .map { it.children.map { it.getValue(Order::class.java) } }
+                .observeChildAdded(query)
+                .map { it.dataSnapshot.getValue(Order::class.java) }
     }
 
     override fun createOrder(order: Order) {
@@ -21,6 +20,5 @@ class FirebaseOrderRepository(val baseUrl: String) : OrderRepository {
         val orderRef = ref.push()
         orderRef.setValue(order)
     }
-
 }
 
