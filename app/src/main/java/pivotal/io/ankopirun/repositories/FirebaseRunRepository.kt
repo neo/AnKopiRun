@@ -1,5 +1,6 @@
 package pivotal.io.ankopirun.repositories
 
+import android.util.Log
 import com.firebase.client.*
 import com.soikonomakis.rxfirebase.RxFirebase
 import pivotal.io.ankopirun.models.Run
@@ -68,8 +69,9 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
                 .map {
                     it.dataSnapshot.getValue(Run::class.java).apply {
                         id = it.dataSnapshot.key
-                    };
+                    }
                 }
+                .onBackpressureBuffer()
     }
 }
 
