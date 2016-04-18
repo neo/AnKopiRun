@@ -100,6 +100,6 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
     }
 
     override fun setTimerText(tick: Long) {
-        timerText.text = countDownPresenter.format(Math.max(0, tick))
+        timerText.text = countDownPresenter.format(tick)
     }
 }

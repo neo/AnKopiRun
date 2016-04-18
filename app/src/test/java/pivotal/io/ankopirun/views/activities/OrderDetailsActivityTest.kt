@@ -51,14 +51,12 @@ class OrderDetailsActivityTest : RobolectricTest() {
     @Test
     fun resumingActivityPopulatesOrderList() {
         val intent = Intent().putExtra(RUN, Run(id = "id"))
-        val listOfOrders = listOf(Order(), Order(), Order())
         val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java).withIntent(intent)
         val activity = activityController.create().get().apply {
             countDownPresenter = mock(CountDownPresenter::class.java)
             runRepository = mock(RunRepository::class.java).apply {
                 `when`(getRun("id")).thenReturn(Observable.just(Run(id = "id")))
                 `when`(clockSkew()).thenReturn(Observable.just(1))
-                `when`(getOrders()).thenReturn(Observable.just(listOfOrders))
             }
             orderListPresenter = mock(OrderListPresenter::class.java)
             mainThread = Schedulers.immediate()
