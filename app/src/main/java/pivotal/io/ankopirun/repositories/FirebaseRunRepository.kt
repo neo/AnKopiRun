@@ -1,6 +1,5 @@
 package pivotal.io.ankopirun.repositories
 
-import android.util.Log
 import com.firebase.client.*
 import com.soikonomakis.rxfirebase.RxFirebase
 import pivotal.io.ankopirun.models.Run
@@ -39,7 +38,7 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
     }
 
     override fun getRuns(): Observable<List<Run>> {
-        val ref = Firebase("$baseUrl/runs")
+        val ref = Firebase("$baseUrl/runs").orderByKey()
 
         return observeSingleValue(ref)
                 .map {

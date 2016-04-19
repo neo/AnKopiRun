@@ -62,7 +62,7 @@ class RunListAdapter : RecyclerView.Adapter<RunListAdapter.ViewHolder>() {
     }
 
     fun add(run: Run) {
-        mDataset.add(run)
+        mDataset.add(0, run)
     }
 
     fun clear() {
