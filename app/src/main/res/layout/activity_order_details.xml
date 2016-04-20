@@ -15,6 +15,7 @@
             android:src="@drawable/full"/>
 
         <TextView
+            android:id="@+id/subtitle"
             style="@style/SubtitleStyle"
             android:layout_marginBottom="8dp"
             android:text="@string/orders"/>

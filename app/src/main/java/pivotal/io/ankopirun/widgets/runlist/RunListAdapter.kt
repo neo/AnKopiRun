@@ -13,6 +13,7 @@ import org.jetbrains.anko.startActivity
 import pivotal.io.ankopirun.*
 import pivotal.io.ankopirun.models.Run
 import pivotal.io.ankopirun.views.activities.CreateOrderActivity
+import pivotal.io.ankopirun.views.activities.OrderDetailsActivity
 
 class RunListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -31,7 +32,11 @@ class RunListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             holder.itemView.apply {
                 setOnClickListener {
-                    context.startActivity<CreateOrderActivity>(RUN to run)
+                    if (run.isInactive(System.currentTimeMillis(), 0)) {
+                        context.startActivity<OrderDetailsActivity>(RUN to run)
+                    } else {
+                        context.startActivity<CreateOrderActivity>(RUN to run)
+                    }
                 }
             }
 

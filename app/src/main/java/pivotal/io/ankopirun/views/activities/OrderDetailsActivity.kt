@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
+import android.view.View
 import android.widget.TextView
 import org.jetbrains.anko.find
 import pivotal.io.ankopirun.App
@@ -86,6 +87,9 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
 
                         countDownPresenter.startCountDown(calculator.durationInMilliseconds())
                         orderListPresenter.listen(run.id)
+                        if (run.isInactive(System.currentTimeMillis(), it)) {
+                            find<TextView>(R.id.subtitle).visibility = View.INVISIBLE
+                        }
                     }
 
                     onError {
