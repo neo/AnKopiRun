@@ -3,7 +3,8 @@ package pivotal.io.ankopirun.widgets.countdowntimer
 import pivotal.io.ankopirun.views.TimerView
 import pivotal.io.ankopirun.widgets.mediaplayer.MediaPlayer
 
-class CountDownPresenterImpl(val countDownTimer: CountDownTimer, val mediaPlayer: MediaPlayer) : CountDownPresenter {
+class CountDownPresenterImpl(val countDownTimer: CountDownTimer, val mediaPlayer: MediaPlayer)
+    : CountDownPresenter {
 
     override var view: TimerView? = null
         set(value) {
@@ -23,6 +24,7 @@ class CountDownPresenterImpl(val countDownTimer: CountDownTimer, val mediaPlayer
 
             setOnFinishHandler {
                 mediaPlayer.stop()
+                view?.startTimeUpActivity()
             }
 
         }.start(durationInMilliseconds)
@@ -30,6 +32,7 @@ class CountDownPresenterImpl(val countDownTimer: CountDownTimer, val mediaPlayer
     }
 
     override fun stopCountDown() {
+        mediaPlayer.stop()
         countDownTimer.cancel()
     }
 
