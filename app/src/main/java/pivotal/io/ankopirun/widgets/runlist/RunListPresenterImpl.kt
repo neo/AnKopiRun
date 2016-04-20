@@ -34,7 +34,7 @@ class RunListPresenterImpl(val runRepository: RunRepository,
     fun createRunSubscriber(): Subscriber<Run> {
         return object : Subscriber<Run>() {
             override fun onCompleted() {
-                /* no-op */
+                /** this will never be called ! **/
             }
 
             override fun onError(e: Throwable) {

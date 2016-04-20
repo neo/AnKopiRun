@@ -37,20 +37,6 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
                 .map { it.getValue(Long::class.java) }
     }
 
-    override fun getRuns(): Observable<List<Run>> {
-        val ref = Firebase("$baseUrl/runs").orderByKey()
-
-        return observeSingleValue(ref)
-                .map {
-                    snapshot ->
-                    snapshot.children.map {
-                        it.getValue(Run::class.java).apply {
-                            id = it.key
-                        };
-                    }
-                }
-    }
-
     override fun getRun(runUuid: String): Observable<Run> {
         val ref = Firebase("$baseUrl/runs/$runUuid")
 

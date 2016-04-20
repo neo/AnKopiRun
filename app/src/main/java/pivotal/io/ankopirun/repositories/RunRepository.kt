@@ -13,8 +13,6 @@ interface RunRepository {
 
     fun getRun(runUuid: String): Observable<Run>
 
-    fun getRuns(): Observable<List<Run>>
-
     fun getAddedRuns(): Observable<Run>
 }
 
