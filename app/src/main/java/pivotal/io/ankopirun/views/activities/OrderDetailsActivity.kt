@@ -106,4 +106,8 @@ class OrderDetailsActivity : AppCompatActivity(), TimerView {
     override fun setTimerText(tick: Long) {
         timerText.text = countDownPresenter.format(tick)
     }
+
+    override fun startTimeUpActivity() {
+    }
+
 }

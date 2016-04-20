@@ -1,10 +1,13 @@
 package pivotal.io.ankopirun.widgets.countdowntimer
 
+import android.support.annotation.VisibleForTesting
+
 class CountDownTimerImpl(val tick: Long = 100) : CountDownTimer {
 
     private var onFinishHandler: (() -> Unit) = {}
     private var onTickHandlers: MutableList<((t: Long) -> Unit)> = mutableListOf()
-    private var timer: android.os.CountDownTimer? = null
+    @VisibleForTesting
+    var timer: android.os.CountDownTimer? = null
 
     override fun setOnFinishHandler(handler: () -> Unit) {
         onFinishHandler = handler

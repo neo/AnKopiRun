@@ -14,4 +14,5 @@
     <string name="initials">Initials</string>
     <string name="what_do_you_want">What do you want?</string>
     <string name="select_a_run">Select a Run</string>
+    <string name="too_bad">TOO BAD!!!</string>
 </resources>

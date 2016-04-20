@@ -25,6 +25,7 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class CreateOrderActivity : AppCompatActivity(), TimerView {
+
     val TAG = lazy { this.localClassName }
 
     @field:[Inject Named("io")]
@@ -114,4 +115,7 @@ class CreateOrderActivity : AppCompatActivity(), TimerView {
         timerText.text = countDownPresenter.format(tick)
     }
 
+    override fun startTimeUpActivity() {
+        startActivity<TimerUpActivity>()
+    }
 }
