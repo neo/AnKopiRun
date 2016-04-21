@@ -14,7 +14,7 @@ class FirebaseRunRepository(val baseUrl: String) : RunRepository {
 
         runRef.setValue(run)
 
-        return observeCompleteEvent(runRef.child("startTime"), ServerValue.TIMESTAMP)
+        return observeCompleteEvent(runRef.child("createdAt"), ServerValue.TIMESTAMP)
                 .flatMap { getRun(runRef.key) }
     }
 

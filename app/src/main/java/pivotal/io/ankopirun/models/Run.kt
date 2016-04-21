@@ -5,15 +5,15 @@ import pivotal.io.ankopirun.RUN_TYPE
 import pivotal.io.ankopirun.widgets.runlist.RunListAdapter
 import java.io.Serializable
 
-data class Run(val name: String = "",
-               val location: String = "",
+data class Run(val runnerName: String = "",
+               val description: String = "",
                val duration: Long = 300,
-               val startTime: Long = 0L,
+               val createdAt: Long = 0L,
                @JsonIgnore var id: String = "") : Serializable {
 
     fun isInactive(currentTime: Long, skew: Long): Boolean {
-        if (startTime == 0L) return false
-        return (startTime + (duration * 1000) - currentTime) < 0
+        if (createdAt == 0L) return false
+        return (createdAt + (duration * 1000) - currentTime) < 0
     }
 }
 

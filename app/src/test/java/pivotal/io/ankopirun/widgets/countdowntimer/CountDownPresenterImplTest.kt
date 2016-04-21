@@ -18,7 +18,7 @@ class CountDownPresenterImplTest : RobolectricTest() {
     fun startsTimerWithDurationAndUpdatesTimerDisplayWhenCountdownStarts() {
         val countDownTimer = mock(CountDownTimer::class.java)
         val mockView = mock(TimerView::class.java)
-        val run = Run("Herp derp", "The Plain", duration = 4000, startTime = 1459999675460)
+        val run = Run("Herp derp", "The Plain", duration = 4000, createdAt = 1459999675460)
         val calculator = CountDownCalculator(run, 1459999678460)
         val mediaPlayer = mock(MediaPlayer::class.java)
         var presenter = CountDownPresenterImpl(countDownTimer, mediaPlayer).apply {

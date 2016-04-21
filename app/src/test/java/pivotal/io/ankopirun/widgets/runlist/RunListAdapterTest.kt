@@ -17,8 +17,8 @@ import pivotal.io.ankopirun.views.activities.OrderDetailsActivity
 
 class RunListAdapterTest: RobolectricTest() {
     lateinit var runListAdapter: RunListAdapter
-    val inactiveRun = Run(duration= 1, startTime = 10)
-    val activeRun = Run(duration = 1, startTime = System.currentTimeMillis() + 100000)
+    val inactiveRun = Run(duration= 1, createdAt = 10)
+    val activeRun = Run(duration = 1, createdAt = System.currentTimeMillis() + 100000)
     val context = RuntimeEnvironment.application
     val viewGroup = object : ViewGroup(context) {
         override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {

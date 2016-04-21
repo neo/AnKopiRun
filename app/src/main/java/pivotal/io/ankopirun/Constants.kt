@@ -1,5 +1,6 @@
 package pivotal.io.ankopirun
 
+const val BASE_URL = "https://kopi-run.firebaseio.com"
 const val RUNNER_NAME = "runner_name"
 const val RUN = "run"
 const val RUN_TYPE = 1

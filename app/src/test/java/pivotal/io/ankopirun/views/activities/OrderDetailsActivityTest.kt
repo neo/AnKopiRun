@@ -58,7 +58,7 @@ class OrderDetailsActivityTest : RobolectricTest() {
 
     @Test
     fun resumingActivityOnAnInactiveRunHidesIncomingOrdersTitle() {
-        val inactiveRun = Run(startTime = 10)
+        val inactiveRun = Run(createdAt = 10)
         val intent = Intent().putExtra(RUN, inactiveRun)
         val activityController = Robolectric.buildActivity(OrderDetailsActivity::class.java).withIntent(intent)
         val activity = createActivityWithMocks(activityController)

@@ -8,7 +8,7 @@ class CountDownCalculatorTest {
 
     @Test
     fun computesDurationInMilliseconds() {
-        val lastRun = Run("Herp derp", "The Plain", duration = 600, startTime = 1460000000000)
+        val lastRun = Run("Herp derp", "The Plain", duration = 600, createdAt = 1460000000000)
         val currentTimeStamp = 1460000005000
 
         val countDownCalculator = CountDownCalculator(lastRun, currentTimeStamp)
@@ -21,7 +21,7 @@ class CountDownCalculatorTest {
         val serverTime = 1460000000000L
         val localTime = 1460010000000L
         val skew = -10000000L
-        val lastRun = Run("Herp derp", "The Plain", duration = 600, startTime = serverTime)
+        val lastRun = Run("Herp derp", "The Plain", duration = 600, createdAt = serverTime)
         val currentTimeStamp = localTime
 
         val countDownCalculator = CountDownCalculator(lastRun, currentTimeStamp, skew)

@@ -42,13 +42,13 @@ class RunListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             holder.apply {
                 nameTextView.apply {
-                    val name = run.name
+                    val name = run.runnerName
                     text = name.substring(0, Math.min(2, name.length)).padEnd(1, '☕')
                     setBackgroundColor(ContextCompat.getColor(context,
                             ORDER_LIST_COLORS.get(position % ORDER_LIST_COLORS.size)))
                 }
                 locationTextView.apply {
-                    text = run.location
+                    text = run.description
                 }
             }
         } else if (holder is SectionViewHolder) {
