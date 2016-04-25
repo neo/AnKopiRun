@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    style="@style/ActivityLinearLayoutStyle"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".views.activities.TimerUpActivity">
+
+    <ImageView
+        style="@style/LogoStyle"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/full"/>
+
+    <TextView
+        style="@style/SubtitleStyle"
+        android:layout_marginBottom="8dp"
+        android:text="@string/too_bad"/>
+</LinearLayout>

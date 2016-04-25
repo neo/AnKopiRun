@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        style="@style/ActivityLinearLayoutStyle"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".views.activities.OrderDetailsActivity">
+
+        <ImageView
+            style="@style/LogoStyle"
+            android:layout_marginBottom="0dp"
+            android:src="@drawable/full"/>
+
+        <TextView
+            style="@style/SubtitleStyle"
+            android:layout_marginBottom="8dp"
+            android:text="@string/make_order"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3">
+
+                <EditText
+                    android:id="@+id/initials"
+                    style="@style/EditTextStyle"
+                    android:layout_margin="4dp"
+                    android:hint="@string/initials"
+                    android:maxLength="2"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7">
+
+                <EditText
+                    android:id="@+id/order_description"
+                    style="@style/EditTextStyle"
+                    android:layout_margin="4dp"
+                    android:hint="@string/what_do_you_want"
+                    android:maxLength="20"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/create_btn"
+            style="@style/ButtonStyle"
+            android:text="@android:string/ok"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/countdown_timer"
+        style="@style/TimerStyle"
+        android:text="@string/start_time"/>
+
+</RelativeLayout>
+

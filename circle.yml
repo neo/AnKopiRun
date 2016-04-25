@@ -1,0 +1,21 @@
+machine:
+  java:
+    version: oraclejdk8
+  environment:
+    APP_HOME : /home/ubuntu/AnKopiRun/app
+    ADB_INSTALL_TIMEOUT : 20
+    JAVA_OPTS: "-Xms512m -Xmx1024m"
+    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2048m -XX:+HeapDumpOnOutOfMemoryError"'
+
+general:
+    artifacts:
+        - /home/ubuntu/AnKopiRun/app/build/outputs/apk/
+
+dependencies:
+  pre:
+    - echo y | android update sdk --no-ui --all --filter tool,extra-android-m2repository,extra-android-support,extra-google-google_play_services,extra-google-m2repository,android-23
+    - echo y | android update sdk --no-ui --all --filter build-tools-23.0.2
+
+test:
+  override:
+      - TERM=dumb ./gradlew testDebug assembleDebug assembleRelease -PpreDexLibraries=false
